@@ -51,7 +51,12 @@ namespace DNPAssignment1.Data
             toUpdate.Pets.Add(pet);
             WriteFamiliesFile();
         }
-        
+
+        public void AddAdult(Adult adult, Family family)
+        {
+            family.Adults.Add(adult);
+        }
+
 
         private void WriteFamiliesFile()
         {
