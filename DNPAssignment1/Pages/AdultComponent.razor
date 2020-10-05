@@ -2,7 +2,7 @@
 @using global::Models
 @using DNPAssignment1.Data
 @using DNPAssignment1.Models.Enums
-@inject IFamilyService FamilyService;
+@inject ICachingService CachingService;
 @inject NavigationManager NavigationManager;
 
 <h3>Add adult</h3>
@@ -75,7 +75,7 @@
     private void AddNewAdult()
     {
         System.Console.WriteLine(newAdult.JobTitle + newAdult.FirstName + newAdult.EyeColor);
-       // FamilyService.AddAdult(newAdult);
+         CachingService.AddAdult(newAdult);
         NavigationManager.NavigateTo("/Families");
     }
 }

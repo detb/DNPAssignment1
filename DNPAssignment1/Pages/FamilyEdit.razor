@@ -3,8 +3,10 @@
 @using global::Models
 @attribute [Authorize(Policy = "SecurityLevel2")]
 @inject IFamilyService FamilyService
+@inject ICachingService CachingService
 
 <h3>FamilyEdit: @family.StreetName</h3>
+
 
 @code {
     [Parameter]
@@ -14,6 +16,7 @@
 
     public Family family;
 
+    
     protected override void OnParametersSet()
     {
         //the param will be set now
@@ -22,4 +25,6 @@
 
         System.Console.WriteLine(family.StreetName);
     }
+
+
 }

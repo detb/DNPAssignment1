@@ -3,6 +3,7 @@
 @using DNPAssignment1.Data
 @attribute [Authorize(Policy = "SecurityLevel2")]
 @inject IFamilyService FamilyService;
+@inject ICachingService CachingService;
 @inject NavigationManager NavigationManager;
 
 <h3>AddFamily</h3>
@@ -20,6 +21,15 @@
     <p class="actions">
         <button class="btn btn-outline-dark" type="submit">Create</button>
     </p>
+    
+    
+    
+    <br/>
+    <br/>
+<p class="actions">
+    <button class="btn btn-outline-dark" @onclick="@(() => AddFamilyToStorage())">Create</button>
+</p>
+
 </EditForm>
 
 @code {
@@ -27,7 +37,13 @@
 
     private void AddNewFamily()
     {
-        FamilyService.AddFamily(newFamilyItem);
+        CachingService.AddHouseNumber(newFamilyItem.HouseNumber);
+        CachingService.AddStreetName(newFamilyItem.StreetName);
         NavigationManager.NavigateTo("/Families");
+    }
+    
+    public void AddFamilyToStorage()
+    {
+        FamilyService.AddFamily(CachingService.GetFamily());
     }
 }

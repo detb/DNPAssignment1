@@ -6,9 +6,9 @@ namespace DNPAssignment1.Data
     public class CachingService : ICachingService
     {
         private Family family;
-        private IList<Adult> adults;
-        private IList<Child> children;
-        private IList<Pet> pets;
+        private IList<Adult> adults = new List<Adult>();
+        private IList<Child> children = new List<Child>();
+        private IList<Pet> pets = new List<Pet>();
         
         public IList<Adult> GetAdults()
         {
