@@ -35,6 +35,7 @@ namespace DNPAssignment1
             services.AddScoped<AuthenticationStateProvider, CustumAuthStateProvider>();
             services.AddScoped<IUserService, InMemoryUserService>();
             services.AddSingleton<IFamilyService, FamilyService>();
+            services.AddSingleton<ICachingService, CachingService>();
 
             services.AddAuthorization(options => {
                 options.AddPolicy("MustBeVIA", a =>
