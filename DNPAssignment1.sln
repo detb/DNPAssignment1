@@ -1,6 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNPAssignment1", "DNPAssignment1\DNPAssignment1.csproj", "{B470F9FF-36FD-4B84-837D-8F0449FD1EA3}"
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30503.244
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DNPAssignment1", "DNPAssignment1\DNPAssignment1.csproj", "{B470F9FF-36FD-4B84-837D-8F0449FD1EA3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,5 +15,11 @@ Global
 		{B470F9FF-36FD-4B84-837D-8F0449FD1EA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B470F9FF-36FD-4B84-837D-8F0449FD1EA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B470F9FF-36FD-4B84-837D-8F0449FD1EA3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0CEB42EA-336D-4869-80FD-72C7B93B2179}
 	EndGlobalSection
 EndGlobal

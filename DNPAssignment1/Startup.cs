@@ -10,6 +10,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using DNPAssignment1.Data;
+using Microsoft.AspNetCore.Components.Authorization;
+using DNPAssignment1.Authentification;
+using DNPAssignment1.Data.Impl;
+using System.Security.Claims;
 
 namespace DNPAssignment1
 {
@@ -28,7 +32,33 @@ namespace DNPAssignment1
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<WeatherForecastService>();
+            services.AddScoped<AuthenticationStateProvider, CustumAuthStateProvider>();
+            services.AddScoped<IUserService, InMemoryUserService>();
+
+            services.AddAuthorization(options => {
+                options.AddPolicy("MustBeVIA", a =>
+                   a.RequireAuthenticatedUser().RequireClaim("Domain", "via.dk"));
+
+                options.AddPolicy("IsAdmin", a =>
+                   a.RequireAuthenticatedUser().RequireClaim("Role", "Admin"));
+
+                options.AddPolicy("IsUser", a =>
+                   a.RequireAuthenticatedUser().RequireClaim("Role", "User"));
+
+                options.AddPolicy("SecurityLevel2", policy =>
+                    policy.RequireAuthenticatedUser().RequireAssertion(context => {
+                        Claim levelClaim = context.User.FindFirst(claim => claim.Type.Equals("Level"));
+                        if (levelClaim == null) return false;
+                        return int.Parse(levelClaim.Value) >= 2;
+                    }));
+
+                options.AddPolicy("SecurityLevel1", policy =>
+                    policy.RequireAuthenticatedUser().RequireAssertion(context => {
+                        Claim levelClaim = context.User.FindFirst(claim => claim.Type.Equals("Level"));
+                        if (levelClaim == null) return false;
+                        return int.Parse(levelClaim.Value) >= 1;
+                    }));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
