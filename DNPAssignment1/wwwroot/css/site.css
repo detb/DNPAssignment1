@@ -144,7 +144,21 @@ input[type="password"], input[type="text"] {
     margin: 1.3rem 1rem 0 0;
 }
 
-
+.families {
+    cursor: pointer;
+    transition: background-color ease .1s;
+}
+.families:hover{
+    background-color: #eee;
+}
+.removeFam{
+    border:none;
+    background: transparent;
+    transition: color ease .1s;
+}
+.removeFam:hover{
+    color:red;
+}
 @media (max-width: 767.98px) {
     .main .top-row:not(.auth) {
         display: none;

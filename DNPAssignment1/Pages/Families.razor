@@ -3,6 +3,7 @@
 @using global::Models
 @attribute [Authorize(Policy = "SecurityLevel2")]
 @inject IFamilyService FamilyService
+@inject Microsoft.AspNetCore.Components.NavigationManager navigationManager
 
 
 <h3>Families</h3>
@@ -22,26 +23,24 @@ else
 {
     <table class="table">
         <thead>
-        <tr>
-            <th>Streetname</th>
-            <th>Housenumber</th>
-            <th>No of Members</th>
-        </tr>
+            <tr>
+                <th>Address</th>
+                <th>No of Members</th>
+            </tr>
         </thead>
         <tbody>
-        @foreach (var item in familiesToShow)
-        {
-            <tr>
-                <td>@item.StreetName</td>
-                <td>@item.HouseNumber</td>
-                <td>@NoFamilyMembers(item)</td>
-                <td>
-                    <button @onclick="@(() => RemoveFamily(item.StreetName, item.HouseNumber))">
-                        <i class="oi oi-trash" style="color:#ff0000"/>
-                    </button>
-                </td>
-            </tr>
-        }
+            @foreach (var item in familiesToShow)
+            {
+                <tr class="families" @onclick="@(() => navigationManager.NavigateTo($"/FamilyEdit/{@item.StreetName}-{@item.HouseNumber}"))">
+                    <td>@item.StreetName @item.HouseNumber</td>
+                    <td>@NoFamilyMembers(item)</td>
+                    <td>
+                        <button class="removeFam" @onclick="@(() => RemoveFamily(item.StreetName, item.HouseNumber))">
+                            <i class="oi oi-trash" />
+                        </button>
+                    </td>
+                </tr>
+            }
         </tbody>
     </table>
 }
@@ -50,7 +49,7 @@ else
     private IList<Family> allFamilies;
     private IList<Family> familiesToShow;
 
-        
+
     protected override async Task OnInitializedAsync()
     {
         allFamilies = FamilyService.GetFamilies();

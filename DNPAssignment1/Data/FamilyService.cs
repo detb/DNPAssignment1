@@ -58,5 +58,10 @@ namespace DNPAssignment1.Data
             string productsAsJson = JsonSerializer.Serialize(families);
             File.WriteAllText(familyFile, productsAsJson);
         }
+
+        public Family GetFamily(string StreetName, int HouseNumber)
+        {
+            return families.First(f => (f.StreetName == StreetName && f.HouseNumber == HouseNumber));
+        }
     }
 }

@@ -9,5 +9,7 @@ namespace DNPAssignment1.Data
         void AddFamily(Family family);
         void RemoveFamily(string StreetName, int HouseNumber);
         void AddPet(string StreetName, int HouseNumber, Pet pet);
+
+        Family GetFamily(string StreetName, int HouseNumber);
     }
 }
