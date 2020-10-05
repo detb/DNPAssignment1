@@ -1,0 +1,54 @@
+﻿@using global::Models
+@using DNPAssignment1.Data
+@inject IFamilyService FamilyService;
+@inject NavigationManager NavigationManager;
+
+<h3>Add adult</h3>
+<EditForm Model="@newAdult" OnValidSubmit="@AddNewAdult">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class="form-group">
+        First name: <br/>
+        <InputTextArea rows="4" @bind-Value="newAdult.FirstName"/>
+    </div>
+    <div class="form-group">
+        Last name: <br/>
+        <InputTextArea rows="4" @bind-Value="newAdult.LastName"/>
+    </div>    
+    <div class="form-group">
+        Hair colour: <br/>
+        <InputSelect @bind-Value="newAdult.HairColor">
+            @foreach(var value in Person.)
+        </InputSelect>
+        <InputTextArea rows="4" @bind-Value="newAdult.LastName"/>
+    </div>       
+    <div class="form-group">
+        Age:<br />
+        <InputNumber @bind-Value="newAdult.Age" />
+    </div>
+    <div class="form-group">
+        Weight:<br />
+        <InputNumber @bind-Value="newAdult.Weight" />
+    </div>    
+    <div class="form-group">
+        Height:<br />
+        <InputNumber @bind-Value="newAdult.Height" />
+    </div>    
+    <div class="form-group">
+        Sex: <br/>
+        <InputTextArea rows="4" @bind-Value="newAdult.Sex"/>
+    </div>    
+    <p class="actions">
+        <button class="btn btn-outline-dark" type="submit">Create</button>
+    </p>
+</EditForm>
+
+@code {
+    private Adult newAdult = new Adult();
+    
+    private void AddNewAdult()
+    {
+        FamilyService.AddAdult(newAdult);
+        NavigationManager.NavigateTo("/Families");
+    }
+}
