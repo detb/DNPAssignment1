@@ -18,7 +18,7 @@ namespace DNPAssignment1.Models.Enums {
         [Description("Janitor")] Janitor,
         [Description("Factory Worker")] FactoryWorker,
         [Description("Chauffeur")] Chauffeur,
-        [Description("Waittress")] Waittress,
+        [Description("Waitress")] Waitress,
         [Description("Ninja")] Ninja,
         [Description("Doctor")] Doctor,
         [Description("Nurse")] Nurse,

@@ -1,0 +1,82 @@
+@page "/AddChild"
+@using global::Models
+@using DNPAssignment1.Data
+@using DNPAssignment1.Models.Enums
+@inject IFamilyService FamilyService;
+@inject NavigationManager NavigationManager;
+
+<h3>ChildComponent</h3>
+<EditForm Model="@newChild" OnValidSubmit="@AddNewChild">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class="form-group">
+        First name: <br/>
+        <InputText @bind-Value="newChild.FirstName"/>
+    </div>
+    <div class="form-group">
+        Last name: <br/>
+        <InputText @bind-Value="newChild.LastName"/>
+    </div>    
+    <div class="form-group">
+        Hair colour: <br/>
+        <InputSelect @bind-Value="newChild.HairColor">
+            @foreach (var value in Enum.GetValues(typeof(HairColours)))
+            {
+                <option>@value</option>
+            }
+        </InputSelect>
+    </div>   
+    <div class="form-group">
+        Eye colour: <br/>
+        <InputSelect @bind-Value="newChild.EyeColor">
+            @foreach (var value in Enum.GetValues(typeof(EyeColours)))
+            {
+                <option>@value</option>
+            }
+        </InputSelect>
+    </div>
+    <div class="form-group">
+        Age:<br />
+        <InputNumber @bind-Value="newChild.Age" />
+    </div>
+    <div class="form-group">
+        Weight:<br />
+        <InputNumber @bind-Value="newChild.Weight" />
+    </div>    
+    <div class="form-group">
+        Height:<br />
+        <InputNumber @bind-Value="newChild.Height" />
+    </div>    
+    <div class="form-group">
+        Sex: <br/>
+        <InputSelect @bind-Value="newChild.Sex">
+                <option>Male</option>
+                <option>Female</option>
+                <option>Other</option>
+        </InputSelect>
+    </div>
+    <div class="form-group">
+        Interest: <br/>
+         <InputSelect @bind-Value="newChild.ChildInterests">
+                    @foreach (var value in Enum.GetValues(typeof(Interests)))
+                    {
+                        <option>@value</option>
+                    }
+                </InputSelect>
+    </div>       
+    <p class="actions">
+        <button class="btn btn-outline-dark" type="submit">Create</button>
+    </p>
+</EditForm>
+
+@code {
+    private Child newChild = new Child();
+    private ChildInterest interest = new ChildInterest();
+
+    private void AddNewChild()
+    {
+        System.Console.WriteLine(interest + newChild.FirstName + newChild.EyeColor);
+       // FamilyService.AddChild(newChild);
+        NavigationManager.NavigateTo("/Families");
+    }
+}
