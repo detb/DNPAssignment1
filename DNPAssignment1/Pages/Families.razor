@@ -1,5 +1,6 @@
 ﻿@page "/Families"
 @using DNPAssignment1.Data
+@using global::Models
 @attribute [Authorize(Policy = "SecurityLevel2")]
 @inject IFamilyService FamilyService
 
@@ -32,13 +33,10 @@ else
         {
             <tr>
                 <td>@item.StreetName</td>
-                <td>@item.</td>
-                <td>@item.</td>
+                <td>@item.HouseNumber</td>
+                <td>@NoFamilyMembers(item)</td>
                 <td>
-                    <input type="checkbox" checked=@item.IsCompleted @onchange="@((arg) => CompletedChange(arg,item))"/>
-                </td>
-                <td>
-                    <button @onclick="@(() => RemoveTodo(item.TodoId))">
+                    <button @onclick="@(() => RemoveFamily(item.StreetName, item.HouseNumber))">
                         <i class="oi oi-trash" style="color:#ff0000"/>
                     </button>
                 </td>
@@ -49,8 +47,8 @@ else
 }
 
 @code {
-    private IList<Families> allFamilies;
-    private IList<Families> familiesToShow;
+    private IList<Family> allFamilies;
+    private IList<Family> familiesToShow;
 
         
     protected override async Task OnInitializedAsync()
@@ -59,4 +57,19 @@ else
         familiesToShow = FamilyService.GetFamilies();
     }
 
+    private void RemoveFamily(string streetName, int houseNumber)
+    {
+        Family toRemove = allFamilies.First(f => (f.StreetName == streetName && f.HouseNumber == houseNumber));
+        FamilyService.RemoveFamily(streetName, houseNumber);
+        allFamilies.Remove(toRemove);
+        familiesToShow.Remove(toRemove);
+    }
+
+    private int NoFamilyMembers(Family family)
+    {
+        int i = 0;
+        i += family.Adults.Count;
+        i += family.Children.Count;
+        return i;
+    }
 }

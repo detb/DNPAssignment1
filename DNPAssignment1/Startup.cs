@@ -34,6 +34,7 @@ namespace DNPAssignment1
             services.AddServerSideBlazor();
             services.AddScoped<AuthenticationStateProvider, CustumAuthStateProvider>();
             services.AddScoped<IUserService, InMemoryUserService>();
+            services.AddSingleton<IFamilyService, FamilyService>();
 
             services.AddAuthorization(options => {
                 options.AddPolicy("MustBeVIA", a =>

@@ -21,13 +21,14 @@ namespace DNPAssignment1.Data
             {
                 string content = File.ReadAllText(familyFile);
                 families = JsonSerializer.Deserialize<IList<Family>>(content);
+                System.Console.WriteLine(families);
             }
         }
 
 
         public IList<Family> GetFamilies()
         {
-            List<Family> tmp = new List<Family>();
+            List<Family> tmp = new List<Family>(families);
             return tmp;
         }
 
