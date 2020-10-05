@@ -33,22 +33,20 @@ namespace DNPAssignment1.Data
 
         public void AddFamily(Family family)
         {
-            int max = families.Max(family => family.Id);
-            family.Id = (++max);
             families.Add(family);
             WriteFamiliesFile();
         }
 
-        public void RemoveFamily(int familyID)
+        public void RemoveFamily(string StreetName, int HouseNumber)
         {
-            Family toRemove = families.First(f => f.Id == familyID);
+            Family toRemove = families.First(f => (f.StreetName == StreetName && f.HouseNumber == HouseNumber));
             families.Remove(toRemove);
             WriteFamiliesFile();
         }
 
-        public void AddPet(int familyID, Pet pet)
+        public void AddPet(string StreetName, int HouseNumber, Pet pet)
         {
-            Family toUpdate = families.First(f => f.Id == familyID);
+            Family toUpdate = families.First(f => (f.StreetName == StreetName && f.HouseNumber == HouseNumber));
             toUpdate.Pets.Add(pet);
             WriteFamiliesFile();
         }

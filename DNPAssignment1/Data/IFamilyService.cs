@@ -7,7 +7,7 @@ namespace DNPAssignment1.Data
     {
         IList<Family> GetFamilies();
         void AddFamily(Family family);
-        void RemoveFamily(int familyID);
-        void AddPet(int familyID, Pet pet);
+        void RemoveFamily(string StreetName, int HouseNumber);
+        void AddPet(string StreetName, int HouseNumber, Pet pet);
     }
 }
