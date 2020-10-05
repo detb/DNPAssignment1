@@ -1,9 +1,62 @@
 ﻿@page "/Families"
+@using DNPAssignment1.Data
 @attribute [Authorize(Policy = "SecurityLevel2")]
+@inject IFamilyService FamilyService
 
 
 <h3>Families</h3>
+@if (allFamilies == null)
+{
+    <p>
+        <em>Loading...</em>
+    </p>
+}
+else if (!allFamilies.Any())
+{
+    <p>
+        <em>No families exist. Please add some.</em>
+    </p>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Streetname</th>
+            <th>Housenumber</th>
+            <th>No of Members</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in familiesToShow)
+        {
+            <tr>
+                <td>@item.StreetName</td>
+                <td>@item.</td>
+                <td>@item.</td>
+                <td>
+                    <input type="checkbox" checked=@item.IsCompleted @onchange="@((arg) => CompletedChange(arg,item))"/>
+                </td>
+                <td>
+                    <button @onclick="@(() => RemoveTodo(item.TodoId))">
+                        <i class="oi oi-trash" style="color:#ff0000"/>
+                    </button>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
 
 @code {
+    private IList<Families> allFamilies;
+    private IList<Families> familiesToShow;
+
+        
+    protected override async Task OnInitializedAsync()
+    {
+        allFamilies = FamilyService.GetFamilies();
+        familiesToShow = FamilyService.GetFamilies();
+    }
 
 }
