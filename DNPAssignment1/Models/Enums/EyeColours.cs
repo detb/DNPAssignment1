@@ -2,7 +2,6 @@ using System.ComponentModel;
 
 namespace DNPAssignment1.Models.Enums {
     public enum EyeColours {
-        [Description("Black")] Black,
         [Description("Brown")] Brown,
         [Description("Grey")] Grey,
         [Description("Green")] Green,
