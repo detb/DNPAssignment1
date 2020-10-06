@@ -56,7 +56,7 @@ public class ValidEyeColor : ValidationAttribute {
         if (valid != null && valid.Contains(value.ToString().ToLower())) {
             return ValidationResult.Success;
         }
-        return new ValidationResult("Valid hair colors are: Brown, Grey, Green, Blue, Amber, Hazel");
+        return new ValidationResult("Valid eye colors are: Brown, Grey, Green, Blue, Amber, Hazel");
     }
 }
 
