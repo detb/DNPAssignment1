@@ -4,9 +4,77 @@
 @attribute [Authorize(Policy = "SecurityLevel2")]
 @inject IFamilyService FamilyService
 @inject ICachingService CachingService
+    <h4>
+        Address:
+    </h4>
+<h3>@family.StreetName @family.HouseNumber</h3>
+<br />
+@if (family.Adults.Count > 0)
+{
+    @if (family.Adults.Count > 1)
+    {
+        <h4>Adults: </h4>
+    }
+    else
+    {
+        <h4>Adult: </h4>
+    }
+    <div class="famDetailContainer">
+        @foreach (Person adult in family.Adults)
+        {
+            <div class="famDetailItem">
+                <p>@adult.FirstName @adult.LastName</p>
+                <p>Age: @adult.Age</p>
+                <p>Height: @adult.Height</p>
+                <p>Sex: @adult.Sex</p>
+            </div>
+        }
+    </div>
+}
 
-<h3>FamilyEdit: @family.StreetName</h3>
-
+@if (family.Children.Count > 0)
+{
+    @if (family.Children.Count > 1)
+    {
+        <h4>Children: </h4>
+    }
+    else
+    {
+        <h4>Child: </h4>
+    }
+    <div class="famDetailContainer">
+        @foreach (Person adult in family.Children)
+        {
+            <div class="famDetailItem">
+                <p>@adult.FirstName @adult.LastName</p>
+                <p>Age: @adult.Age</p>
+                <p>Height: @adult.Height</p>
+                <p>Sex: @adult.Sex</p>
+            </div>
+        }
+    </div>
+}
+@if (family.Pets.Count > 0)
+{
+    @if (family.Pets.Count > 1)
+    {
+        <h4>Pets: </h4>
+    }
+    else
+    {
+        <h4>Pet: </h4>
+    }
+    <div class="famDetailContainer">
+        @foreach (Pet pet in family.Pets)
+        {
+            <div class="famDetailItem">
+                <p>@pet.Name</p>
+                <p>Age: @pet.Age</p>
+                <p>Species: @pet.Species</p>
+            </div>
+        }
+    </div>
+}
 
 @code {
     [Parameter]
@@ -16,7 +84,7 @@
 
     public Family family;
 
-    
+
     protected override void OnParametersSet()
     {
         //the param will be set now

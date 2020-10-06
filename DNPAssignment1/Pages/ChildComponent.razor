@@ -5,7 +5,7 @@
 @inject ICachingService CachingService;
 @inject NavigationManager NavigationManager;
 
-<h3>ChildComponent</h3>
+<h3>Add Child</h3>
 <EditForm Model="@newChild" OnValidSubmit="@AddNewChild">
     <DataAnnotationsValidator />
     <ValidationSummary />
@@ -55,28 +55,28 @@
             <option>Other</option>
         </InputSelect>
     </div>
-       
+    <EditForm Model="@interest" OnValidSubmit="@AddInterestsToList" Context="Interest">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div class="form-group">
+            Interest: <br />
+            <InputSelect @bind-Value="interest.Type">
+                @foreach (var value in Enum.GetValues(typeof(InterestsEnum)))
+                {
+                    <option>@value</option>
+                }
+            </InputSelect>
+        </div>
+        <p class="actions">
+            <button class="btn btn-outline-dark" type="submit">Add Interest</button>
+        </p>
+    </EditForm>
     <p class="actions">
-        <button class="btn btn-outline-dark" type="submit">Create</button>
+        <button class="btn btn-primary" type="submit" onclick="this.classList.add('active');">Create</button>
     </p>
 </EditForm>
 
-<EditForm Model="@interest" OnValidSubmit="@AddInterestsToList">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
-    <div class="form-group">
-        Interest: <br />
-        <InputSelect @bind-Value="interest.Type">
-            @foreach (var value in Enum.GetValues(typeof(InterestsEnum)))
-            {
-                <option>@value</option>
-            }
-        </InputSelect>
-    </div>
-    <p class="actions">
-        <button class="btn btn-outline-dark" type="submit" onclick="this.classList.add('active');">Add</button>
-    </p>
-</EditForm>
+
 
 @code {
     private List<ChildInterest> interests = new List<ChildInterest>();

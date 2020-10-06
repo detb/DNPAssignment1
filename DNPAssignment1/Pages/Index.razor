@@ -1,7 +1,41 @@
 ﻿@page "/"
+@using DNPAssignment1.Data
+@using global::Models
+@inject IFamilyService FamilyService
+@inject Microsoft.AspNetCore.Components.NavigationManager navigationManager
 
-<h1>Hello, world!</h1>
+<h2>Families in system: @allFamilies.Count</h2>
 
-Welcome to your new app.
+<div class="familyContainer" id="familyContainer">
+    @foreach (var family in allFamilies)
+    {
+    <div class="familyCard" @onclick="@(() => navigationManager.NavigateTo($"/FamilyEdit/{@family.StreetName}-{@family.HouseNumber}"))">
+        <p class="addr">@family.StreetName @family.HouseNumber</p>
+        <p class="memb">Members: @NoFamilyMembers(family)</p>
+        @if (family.Pets.Count > 0)
+        {
+            <p class="memb">Pets: @family.Pets.Count</p>
+        }
+    </div>
+    }
+</div>
 
-<SurveyPrompt Title="How is Blazor working for you?"/>
+@code{
+    private IList<Family> allFamilies;
+    private IList<Family> familiesToShow;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        allFamilies = FamilyService.GetFamilies();
+        familiesToShow = FamilyService.GetFamilies();
+    }
+
+    private int NoFamilyMembers(Family family)
+    {
+        int i = 0;
+        i += family.Adults.Count;
+        i += family.Children.Count;
+        return i;
+    }
+}

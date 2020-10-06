@@ -7,12 +7,12 @@
 @inject NavigationManager NavigationManager;
 
 <EditForm Model="@newFamilyItem" OnValidSubmit="@AddNewFamily">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
     <div class="familyContainer" id="container">
         <div>
 
             <h3>Add Family</h3>
+            <DataAnnotationsValidator />
+            <ValidationSummary />
             <div class="form-group">
                 Streetname: <br />
                 <InputText @bind-Value="newFamilyItem.StreetName" />
@@ -23,12 +23,13 @@
                 House number:<br />
                 <InputNumber @bind-Value="newFamilyItem.HouseNumber" />
             </div>
+            
+            Create: <br />
+            <button type="button" class="btn btn-outline-dark" @onclick="() => adults.Add(null)">Adult</button>
 
-            <button class="btn btn-outline-dark" @onclick="() => adults.Add(null)">Add Adult</button>
+            <button type="button" class="btn btn-outline-dark" @onclick="() => children.Add(null)">Child</button>
 
-            <button class="btn btn-outline-dark" @onclick="() => children.Add(null)">Add Child</button>
-
-            <button class="btn btn-outline-dark">Add Pet</button>
+            <button type="button" class="btn btn-outline-dark">Pet</button>
         </div>
         @foreach (var a in adults)
         {
@@ -45,7 +46,7 @@
     </div>
     <br/>
     <p class="actions">
-        <button class="btn btn-success" @onclick="@(() => AddFamilyToStorage())">Create</button>
+        <button type="submit" class="btn btn-success" @onclick="@(() => AddFamilyToStorage())">Create</button>
     </p>
 
 </EditForm>
@@ -60,13 +61,11 @@
     {
         CachingService.AddHouseNumber(newFamilyItem.HouseNumber);
         CachingService.AddStreetName(newFamilyItem.StreetName);
+        FamilyService.AddFamily(CachingService.GetFamily());
+        NavigationManager.NavigateTo("/Families");
     }
 
     public void AddFamilyToStorage()
     {
-        CachingService.AddHouseNumber(newFamilyItem.HouseNumber);
-        CachingService.AddStreetName(newFamilyItem.StreetName);
-        FamilyService.AddFamily(CachingService.GetFamily());
-        NavigationManager.NavigateTo("/Families");
     }
 }

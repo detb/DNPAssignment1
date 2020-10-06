@@ -157,7 +157,6 @@ input[type="password"], input[type="text"] {
 }
 .active {
     background: #5EBA7D !important;
-    cursor: not-allowed !important;
 }
 .families:hover {
     background-color: #ddd;
@@ -176,9 +175,11 @@ input[type="password"], input[type="text"] {
 .familyContainer {
     display: flex;
     flex-wrap: wrap;
+    transition: height ease .2s;
 }
-.btn-outline-dark{
+.btn-outline-dark {
     background: white;
+    border: .1rem solid #aaa !important;
 }
 .familyItem {
     margin: 2rem;
@@ -187,7 +188,70 @@ input[type="password"], input[type="text"] {
     border-radius: .4rem;
     background-color: white;
 }
+input {
+    border-radius: .3rem;
+    border: .1rem solid #ddd;
+    padding: .2rem;
+    padding-left: .5rem;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 0px 0px 0px, rgba(60, 64, 67, 0.15) 0px 0px 0px 0px;
+    transition: box-shadow ease .2s;
+}
+    input:active, input:focus, select:focus, select:active {
+        border-color: #aaa !important;
+        outline: none;
+        box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    }
 
+select {
+    width: 100%;
+    border-radius: .3rem;
+    border: .1rem solid #ddd;
+    padding: .2rem;
+}
+
+.familyCard {
+    height: 8rem;
+    width: unset;
+    margin: .3rem;
+    padding: 1.5rem 1rem;
+    background: white;
+    border-radius: .3rem;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
+    transition: transform ease .1s;
+    cursor: pointer;
+}
+.familyCard:hover{
+    transform: translate(0, -0.3rem);
+}
+.familyCard .addr{
+    font-size: 1.3rem !important;
+    margin-bottom: 0;
+}
+    .familyCard .memb {
+        margin-bottom: 0;
+    }
+
+.famDetailContainer {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.famDetailItem {
+    height: 8.5rem;
+    width: unset;
+    margin: .3rem;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background: white;
+    border-radius: .3rem;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
+}
+    .famDetailItem p {
+        margin-bottom: 0;
+    }
+    .famDetailItem p:first-of-type {
+        font-size: 1.3rem;
+    }
 @media (max-width: 767.98px) {
     .main .top-row:not(.auth) {
         display: none;

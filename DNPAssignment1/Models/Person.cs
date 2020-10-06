@@ -8,6 +8,7 @@ public class Person {
     
     public int Id { get; set; }
     [NotNull]
+    [Required(AllowEmptyStrings = false)]
     public string FirstName { get; set; }
     [NotNull]
     public string LastName { get; set; }
