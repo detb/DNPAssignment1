@@ -239,7 +239,7 @@ select {
 }
 
 .famDetailItem {
-    height: 8.5rem;
+    height: unset;
     width: unset;
     margin: .3rem;
     margin-bottom: 2rem;

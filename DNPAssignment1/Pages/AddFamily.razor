@@ -23,13 +23,13 @@
                 House number:<br />
                 <InputNumber @bind-Value="newFamilyItem.HouseNumber" />
             </div>
-            
+
             Create: <br />
             <button type="button" class="btn btn-outline-dark" @onclick="() => adults.Add(null)">Adult</button>
 
             <button type="button" class="btn btn-outline-dark" @onclick="() => children.Add(null)">Child</button>
 
-            <button type="button" class="btn btn-outline-dark">Pet</button>
+            <button type="button" class="btn btn-outline-dark" @onclick="() => pets.Add(null)">Pet</button>
         </div>
         @foreach (var a in adults)
         {
@@ -41,6 +41,12 @@
         {
             <div class='familyItem'>
                 <ChildComponent />
+            </div>
+        }
+        @foreach (var a in pets)
+        {
+            <div class='familyItem'>
+                <PetComponent />
             </div>
         }
     </div>

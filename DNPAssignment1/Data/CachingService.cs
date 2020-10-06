@@ -60,8 +60,8 @@ namespace DNPAssignment1.Data
         public Family GetFamily()
         {
             family.Adults = (List<Adult>)adults;
-            family.Children = (List<Child>) GetChildren();
-            family.Pets = (List<Pet>) GetPets();
+            family.Children = (List<Child>) children;
+            family.Pets = (List<Pet>) pets;
             return family;
         }
     }

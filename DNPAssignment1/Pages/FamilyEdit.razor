@@ -20,14 +20,18 @@
         <h4>Adult: </h4>
     }
     <div class="famDetailContainer">
-        @foreach (Person adult in family.Adults)
+        @foreach (Adult adult in family.Adults)
         {
-            <div class="famDetailItem">
-                <p>@adult.FirstName @adult.LastName</p>
-                <p>Age: @adult.Age</p>
-                <p>Height: @adult.Height</p>
-                <p>Sex: @adult.Sex</p>
-            </div>
+        <div class="famDetailItem">
+            <p>@adult.FirstName @adult.LastName</p>
+            <p>Age: @adult.Age</p>
+            <p>Height: @adult.Height</p>
+            <p>Weight: @adult.Weight</p>
+            <p>Hair Color: @adult.HairColor</p>
+            <p>Eye Color: @adult.EyeColor</p>
+            <p>Sex: @adult.Sex</p>
+            <p>Job: @adult.JobTitle</p>
+        </div>
         }
     </div>
 }
@@ -43,14 +47,21 @@
         <h4>Child: </h4>
     }
     <div class="famDetailContainer">
-        @foreach (Person adult in family.Children)
+        @foreach (Child child in family.Children)
         {
-            <div class="famDetailItem">
-                <p>@adult.FirstName @adult.LastName</p>
-                <p>Age: @adult.Age</p>
-                <p>Height: @adult.Height</p>
-                <p>Sex: @adult.Sex</p>
-            </div>
+        <div class="famDetailItem">
+            <p>@child.FirstName @child.LastName</p>
+            <p>Age: @child.Age</p>
+            <p>Height: @child.Height</p>
+            <p>Weight: @child.Weight</p>
+            <p>Hair Color: @child.HairColor</p>
+            <p>Eye Color: @child.EyeColor</p>
+            <p>Sex: @child.Sex</p>
+            @foreach (ChildInterest intrest in child.ChildInterests)
+            {
+                <p>Interest: @intrest.InterestId</p>
+            }
+        </div>
         }
     </div>
 }
