@@ -6,44 +6,67 @@
 @inject ICachingService CachingService;
 @inject NavigationManager NavigationManager;
 
-<h3>AddFamily</h3>
 <EditForm Model="@newFamilyItem" OnValidSubmit="@AddNewFamily">
     <DataAnnotationsValidator />
     <ValidationSummary />
-    <div class="form-group">
-        Streetname: <br/>
-        <InputTextArea rows="4" @bind-Value="newFamilyItem.StreetName"/>
-    </div>
-    <div class="form-group">
-        House number:<br />
-        <InputNumber @bind-Value="newFamilyItem.HouseNumber" />
+    <div class="familyContainer" id="container">
+        <div>
+
+            <h3>Add Family</h3>
+            <div class="form-group">
+                Streetname: <br />
+                <InputText @bind-Value="newFamilyItem.StreetName" />
+            </div>
+
+            <br />
+            <div class="form-group">
+                House number:<br />
+                <InputNumber @bind-Value="newFamilyItem.HouseNumber" />
+            </div>
+
+            <button class="btn btn-outline-dark" @onclick="() => adults.Add(null)">Add Adult</button>
+
+            <button class="btn btn-outline-dark" @onclick="() => children.Add(null)">Add Child</button>
+
+            <button class="btn btn-outline-dark">Add Pet</button>
         </div>
+        @foreach (var a in adults)
+        {
+            <div class='familyItem'>
+                <AdultComponent />
+            </div>
+        }
+        @foreach (var a in children)
+        {
+            <div class='familyItem'>
+                <ChildComponent />
+            </div>
+        }
+    </div>
+    <br/>
     <p class="actions">
-        <button class="btn btn-outline-dark" type="submit">Create</button>
+        <button class="btn btn-success" @onclick="@(() => AddFamilyToStorage())">Create</button>
     </p>
-    
-    
-    
-    <br/>
-    <br/>
-<p class="actions">
-    <button class="btn btn-outline-dark" @onclick="@(() => AddFamilyToStorage())">Create</button>
-</p>
 
 </EditForm>
 
 @code {
     private Family newFamilyItem = new Family();
+    public List<Object> adults = new List<object>();
+    public List<Object> children = new List<object>();
+    public List<Object> pets = new List<object>();
 
     private void AddNewFamily()
     {
         CachingService.AddHouseNumber(newFamilyItem.HouseNumber);
         CachingService.AddStreetName(newFamilyItem.StreetName);
-        NavigationManager.NavigateTo("/Families");
     }
-    
+
     public void AddFamilyToStorage()
     {
+        CachingService.AddHouseNumber(newFamilyItem.HouseNumber);
+        CachingService.AddStreetName(newFamilyItem.StreetName);
         FamilyService.AddFamily(CachingService.GetFamily());
+        NavigationManager.NavigateTo("/Families");
     }
 }

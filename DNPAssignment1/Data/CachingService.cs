@@ -45,17 +45,21 @@ namespace DNPAssignment1.Data
 
         public void AddStreetName(string streetname)
         {
+            if (family == null)
+                family = new Family();
             family.StreetName = streetname;
         }
 
         public void AddHouseNumber(int housenumber)
         {
+            if (family == null)
+                family = new Family();
             family.HouseNumber = housenumber;
         }
 
         public Family GetFamily()
         {
-            family.Adults = (List<Adult>) GetAdults();
+            family.Adults = (List<Adult>)adults;
             family.Children = (List<Child>) GetChildren();
             family.Pets = (List<Pet>) GetPets();
             return family;

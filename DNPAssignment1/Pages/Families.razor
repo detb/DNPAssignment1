@@ -31,11 +31,11 @@ else
         <tbody>
             @foreach (var item in familiesToShow)
             {
-                <tr class="families" @onclick="@(() => navigationManager.NavigateTo($"/FamilyEdit/{@item.StreetName}-{@item.HouseNumber}"))">
-                    <td>@item.StreetName @item.HouseNumber</td>
+                <tr class="families" >
+                    <td class="clk" @onclick="@(() => navigationManager.NavigateTo($"/FamilyEdit/{@item.StreetName}-{@item.HouseNumber}"))">@item.StreetName @item.HouseNumber</td>
                     <td>@NoFamilyMembers(item)</td>
                     <td>
-                        <button class="removeFam" @onclick="@(() => RemoveFamily(item.StreetName, item.HouseNumber))">
+                        <button class="clk removeFam" @onclick="@(() => RemoveFamily(item.StreetName, item.HouseNumber))">
                             <i class="oi oi-trash" />
                         </button>
                     </td>

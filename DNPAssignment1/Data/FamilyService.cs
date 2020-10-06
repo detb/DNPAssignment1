@@ -19,8 +19,7 @@ namespace DNPAssignment1.Data
             }
             else
             {
-                string content = File.ReadAllText(familyFile);
-                families = JsonSerializer.Deserialize<IList<Family>>(content);
+                updateFamilyList();
                 System.Console.WriteLine(families);
             }
         }
@@ -62,11 +61,18 @@ namespace DNPAssignment1.Data
         {
             string productsAsJson = JsonSerializer.Serialize(families);
             File.WriteAllText(familyFile, productsAsJson);
+            updateFamilyList();
         }
 
         public Family GetFamily(string StreetName, int HouseNumber)
         {
             return families.First(f => (f.StreetName == StreetName && f.HouseNumber == HouseNumber));
+        }
+
+        public void updateFamilyList()
+        {
+            string content = File.ReadAllText(familyFile);
+            families = JsonSerializer.Deserialize<IList<Family>>(content);
         }
     }
 }
