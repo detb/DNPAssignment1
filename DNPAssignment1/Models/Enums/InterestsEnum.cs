@@ -1,7 +1,9 @@
-using System.ComponentModel;
+﻿using System.ComponentModel;
 
-namespace DNPAssignment1.Models.Enums {
-    public enum Interests {
+namespace DNPAssignment1.Models.Enums
+{
+    public enum InterestsEnum
+    {
         [Description("Soccer")] Soccer,
         [Description("Drawing")] Drawing,
         [Description("Kite Flying")] KiteFlying,
@@ -15,7 +17,5 @@ namespace DNPAssignment1.Models.Enums {
         [Description("Gymnastics")] Gymnastics,
         [Description("Harry Potter")] HarryPotter,
         [Description("Frozen")] Frozen
-        
-        
     }
 }

@@ -2,7 +2,7 @@
 @using global::Models
 @using DNPAssignment1.Data
 @using DNPAssignment1.Models.Enums
-@inject IFamilyService FamilyService;
+@inject ICachingService CachingService;
 @inject NavigationManager NavigationManager;
 
 <h3>ChildComponent</h3>
@@ -50,33 +50,59 @@
     <div class="form-group">
         Sex: <br/>
         <InputSelect @bind-Value="newChild.Sex">
-                <option>Male</option>
-                <option>Female</option>
-                <option>Other</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Other</option>
         </InputSelect>
     </div>
-    <div class="form-group">
-        Interest: <br/>
-         <InputSelect @bind-Value="newChild.ChildInterests">
-                    @foreach (var value in Enum.GetValues(typeof(Interests)))
-                    {
-                        <option>@value</option>
-                    }
-                </InputSelect>
-    </div>       
+       
     <p class="actions">
         <button class="btn btn-outline-dark" type="submit">Create</button>
     </p>
 </EditForm>
 
-@code {
-    private Child newChild = new Child();
-    private ChildInterest interest = new ChildInterest();
+<EditForm Model="@interest" OnValidSubmit="@AddInterestsToList">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class="form-group">
+            Interest: <br/>
+            <InputSelect @bind-Value="interest.Type">
+                @foreach (var value in Enum.GetValues(typeof(InterestsEnum)))
+                {
+                    <option>@value</option>
+                }
+            </InputSelect>
+    </div>    
+        <p class="actions">
+            <button class="btn btn-outline-dark" type="submit">Add Interest</button>
+        </p>
+</EditForm>
 
+@code {
+    private List<ChildInterest> interests = new List<ChildInterest>();
+    private Interest interest = new Interest();
+    private Child newChild = new Child();
+
+    private void Startup()
+    {
+    }
+    
+    protected override async Task OnInitializedAsync()
+    {
+        Startup();
+    }
+
+    private void AddInterestsToList()
+    {
+        ChildInterest insertInterest = new ChildInterest();
+        insertInterest.Interest = interest;
+        interests.Add(insertInterest);
+    }
     private void AddNewChild()
     {
-        System.Console.WriteLine(interest + newChild.FirstName + newChild.EyeColor);
-       // FamilyService.AddChild(newChild);
+        newChild.ChildInterests = interests;
+        System.Console.WriteLine(newChild.ChildInterests.Count + newChild.FirstName + newChild.EyeColor);
+       // CachingService.AddChild(newChild);
         NavigationManager.NavigateTo("/Families");
     }
 }
