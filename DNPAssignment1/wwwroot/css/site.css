@@ -219,6 +219,7 @@ select {
     box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
     transition: transform ease .1s;
     cursor: pointer;
+    overflow: hidden;
 }
 .familyCard:hover{
     transform: translate(0, -0.3rem);
@@ -228,6 +229,7 @@ select {
     margin-bottom: 0;
 }
     .familyCard .memb {
+        opacity: .7;
         margin-bottom: 0;
     }
 
@@ -252,6 +254,33 @@ select {
     .famDetailItem p:first-of-type {
         font-size: 1.3rem;
     }
+
+.memberCont {
+    display: flex;
+    flex-direction: row;
+    margin-top: 1rem;
+    float: right;
+}
+
+.childDisplay, .adultDisplay, .petDisplay {
+    height: 1.5rem;
+    width: unset;
+    margin: 0rem .3rem;
+    padding-left: 1.5rem;
+    background-position: left; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain; /* Resize the background image to cover the entire container */
+    opacity: .7;
+}
+    .childDisplay {
+    background-image: url("001-baby.png");
+}
+.adultDisplay {
+    background-image: url("003-man.png");
+}
+.petDisplay {
+    background-image: url("002-dog.png");
+}
 @media (max-width: 767.98px) {
     .main .top-row:not(.auth) {
         display: none;

@@ -12,10 +12,23 @@
     <div class="familyCard" @onclick="@(() => navigationManager.NavigateTo($"/FamilyEdit/{@family.StreetName}-{@family.HouseNumber}"))">
         <p class="addr">@family.StreetName @family.HouseNumber</p>
         <p class="memb">Members: @NoFamilyMembers(family)</p>
-        @if (family.Pets.Count > 0)
-        {
-            <p class="memb">Pets: @family.Pets.Count</p>
-        }
+        <div class="memberCont">
+            @if (family.Adults.Count > 0)
+            {
+                <div class="adultDisplay">@if (family.Adults.Count > 1)
+                {<p> x @family.Adults.Count</p>}</div>
+            }
+            @if (family.Children.Count > 0)
+            {
+                <div class="childDisplay">@if (family.Children.Count > 1)
+                {<p> x @family.Children.Count</p>}</div>
+            }
+            @if (family.Pets.Count > 0)
+            {
+                <div class="petDisplay">@if (family.Pets.Count > 1)
+                {<p> x @family.Pets.Count</p>}</div>
+            }
+        </div>
     </div>
     }
 </div>

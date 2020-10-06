@@ -25,6 +25,7 @@ else
         <thead>
             <tr>
                 <th>Address</th>
+                <th>Adult(s)</th>
                 <th>No of Members</th>
             </tr>
         </thead>
@@ -33,6 +34,7 @@ else
             {
                 <tr class="families" >
                     <td class="clk" @onclick="@(() => navigationManager.NavigateTo($"/FamilyEdit/{@item.StreetName}-{@item.HouseNumber}"))">@item.StreetName @item.HouseNumber</td>
+                    <td>@GetAdults(item)</td>
                     <td>@NoFamilyMembers(item)</td>
                     <td>
                         <button class="clk removeFam" @onclick="@(() => RemoveFamily(item.StreetName, item.HouseNumber))">
@@ -70,5 +72,17 @@ else
         i += family.Adults.Count;
         i += family.Children.Count;
         return i;
+    }
+    private string GetAdults(Family family) {
+        string str = "";
+        for(int i = 0; i < family.Adults.Count; i++)
+        {
+            str +=" " + family.Adults[i].FirstName + " " + family.Adults[i].LastName;
+            if(i < family.Adults.Count - 1)
+            {
+                str += ",";
+            }
+        }
+        return str;
     }
 }
