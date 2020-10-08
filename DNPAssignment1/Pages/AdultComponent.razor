@@ -5,76 +5,96 @@
 @inject ICachingService CachingService;
 @inject NavigationManager NavigationManager;
 
-<h3>Add adult</h3>
-<EditForm Model="@newAdult" OnValidSubmit="@AddNewAdult">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
-    <div class="form-group">
-        First name: <br/>
-        <InputText @bind-Value="newAdult.FirstName"/>
-    </div>
-    <div class="form-group">
-        Last name: <br/>
-        <InputText @bind-Value="newAdult.LastName"/>
-    </div>    
-    <div class="form-group">
-        Hair colour: <br/>
-        <InputSelect @bind-Value="newAdult.HairColor">
-            @foreach (var value in Enum.GetValues(typeof(HairColours)))
-            {
-                <option>@value</option>
-            }
-        </InputSelect>
-    </div>   
-    <div class="form-group">
-        Eye colour: <br/>
-        <InputSelect @bind-Value="newAdult.EyeColor">
-            @foreach (var value in Enum.GetValues(typeof(EyeColours)))
-            {
-                <option>@value</option>
-            }
-        </InputSelect>
-    </div>
-    <div class="form-group">
-        Age:<br />
-        <InputNumber @bind-Value="newAdult.Age" />
-    </div>
-    <div class="form-group">
-        Weight:<br />
-        <InputNumber @bind-Value="newAdult.Weight" />
-    </div>    
-    <div class="form-group">
-        Height:<br />
-        <InputNumber @bind-Value="newAdult.Height" />
-    </div>    
-    <div class="form-group">
-        Sex: <br/>
-        <InputSelect @bind-Value="newAdult.Sex">
+<div class='familyItem @(IsOpen ? "" : "closed")'>
+    @if (IsOpen)
+    {
+        <h3>Add adult</h3>
+    }
+    else
+    {
+        <h4>@newAdult.FirstName @newAdult.LastName</h4>
+    }
+    <EditForm Model="@newAdult" OnValidSubmit="@AddNewAdult">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div class="form-group">
+            First name: <br />
+            <InputText @bind-Value="newAdult.FirstName" disabled="@IsDisabled" />
+        </div>
+        <div class="form-group">
+            Last name: <br />
+            <InputText @bind-Value="newAdult.LastName" disabled="@IsDisabled" />
+        </div>
+        <div class="form-group">
+            Hair colour: <br />
+            <InputSelect @bind-Value="newAdult.HairColor" disabled="@IsDisabled">
+                <option value="" selected disabled hidden>Choose here</option>
+                @foreach (var value in Enum.GetValues(typeof(HairColours)))
+                {
+                    <option>@value</option>
+                }
+            </InputSelect>
+        </div>
+        <div class="form-group">
+            Eye colour: <br />
+            <InputSelect @bind-Value="newAdult.EyeColor" disabled="@IsDisabled">
+                <option value="" selected disabled hidden>Choose here</option>
+                @foreach (var value in Enum.GetValues(typeof(EyeColours)))
+                {
+                    <option>@value</option>
+                }
+            </InputSelect>
+        </div>
+        <div class="form-group">
+            Age:<br />
+            <InputNumber @bind-Value="newAdult.Age" disabled="@IsDisabled" />
+        </div>
+        <div class="form-group">
+            Weight:<br />
+            <InputNumber @bind-Value="newAdult.Weight" disabled="@IsDisabled" />
+        </div>
+        <div class="form-group">
+            Height:<br />
+            <InputNumber @bind-Value="newAdult.Height" disabled="@IsDisabled" />
+        </div>
+        <div class="form-group">
+            Sex: <br />
+            <InputSelect @bind-Value="newAdult.Sex" disabled="@IsDisabled">
+                <option value="" selected disabled hidden>Choose here</option>
                 <option>Male</option>
                 <option>Female</option>
                 <option>Other</option>
-        </InputSelect>
-    </div>
-    <div class="form-group">
-        Job Title: <br/>
-        <InputSelect @bind-Value="newAdult.JobTitle">
-            @foreach (var value in Enum.GetValues(typeof(Jobs)))
-            {
-                <option>@value</option>
-            }
-        </InputSelect>
-    </div>       
-    <p class="actions">
-        <button class="btn btn-primary" type="submit" onclick="this.classList.add('active');">Add</button>
-    </p>
-</EditForm>
+            </InputSelect>
+        </div>
+        <div class="form-group">
+            Job Title: <br />
+            <InputSelect @bind-Value="newAdult.JobTitle" disabled="@IsDisabled">
+                <option value="" selected disabled hidden>Choose here</option>
+                @foreach (var value in Enum.GetValues(typeof(Jobs)))
+                {
+                    <option>@value</option>
+                }
+            </InputSelect>
+        </div>
+        <p class="actions">
+            <button class="btn btn-primary" type="submit" onclick="this.classList.add('active');" disabled="@IsDisabled">@buttonName</button>
+        </p>
+    </EditForm>
+</div>
 
-@code {
-    private Adult newAdult = new Adult();
-    
-    private void AddNewAdult()
-    {
-        System.Console.WriteLine(newAdult.JobTitle + newAdult.FirstName + newAdult.EyeColor);
-        CachingService.AddAdult(newAdult);
-    }
-}
+        @code {
+            private Adult newAdult = new Adult();
+            protected bool IsDisabled { get; set; } = false;
+            private bool IsOpen { get; set; } = true;
+
+            private string buttonName = "Add";
+
+            private void AddNewAdult()
+            {
+                buttonName = "Added";
+                IsOpen = !IsOpen;
+                IsDisabled = true;
+                System.Console.WriteLine(newAdult.JobTitle + newAdult.FirstName + newAdult.EyeColor);
+                CachingService.AddAdult(newAdult);
+            }
+        }

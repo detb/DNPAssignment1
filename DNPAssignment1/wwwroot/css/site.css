@@ -184,6 +184,7 @@ input[type="password"], input[type="text"] {
 .familyItem {
     margin: 2rem;
     padding: 1rem;
+    margin-top: 0;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
     border-radius: .4rem;
     background-color: white;
@@ -207,6 +208,11 @@ select {
     border-radius: .3rem;
     border: .1rem solid #ddd;
     padding: .2rem;
+}
+
+.closed{
+    height: 3.5rem;
+    overflow: hidden;
 }
 
 .familyCard {

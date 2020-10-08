@@ -9,10 +9,10 @@
 <EditForm Model="@newFamilyItem" OnValidSubmit="@AddNewFamily">
     <div class="familyContainer" id="container">
         <div>
-
-            <h3>Add Family</h3>
             <DataAnnotationsValidator />
             <ValidationSummary />
+
+            <h3 style="margin-top: 16px;">Add Family</h3>
             <div class="form-group">
                 Streetname: <br />
                 <InputText @bind-Value="newFamilyItem.StreetName" />
@@ -30,30 +30,25 @@
             <button type="button" class="btn btn-outline-dark" @onclick="() => children.Add(null)">Child</button>
 
             <button type="button" class="btn btn-outline-dark" @onclick="() => pets.Add(null)">Pet</button>
+            <br />
+            <br />
+            <p class="actions">
+                <button type="submit" class="btn btn-success" @onclick="@(() => AddFamilyToStorage())">Create Family</button>
+            </p>
         </div>
         @foreach (var a in adults)
         {
-            <div class='familyItem'>
                 <AdultComponent />
-            </div>
         }
         @foreach (var a in children)
         {
-            <div class='familyItem'>
                 <ChildComponent />
-            </div>
         }
         @foreach (var a in pets)
         {
-            <div class='familyItem'>
                 <PetComponent />
-            </div>
         }
     </div>
-    <br/>
-    <p class="actions">
-        <button type="submit" class="btn btn-success" @onclick="@(() => AddFamilyToStorage())">Create</button>
-    </p>
 
 </EditForm>
 

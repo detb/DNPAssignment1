@@ -5,104 +5,118 @@
 @inject ICachingService CachingService;
 @inject NavigationManager NavigationManager;
 
-<h3>Add Child</h3>
-<EditForm Model="@newChild" OnValidSubmit="@AddNewChild">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
-    <div class="form-group">
-        First name: <br/>
-        <InputText @bind-Value="newChild.FirstName"/>
-    </div>
-    <div class="form-group">
-        Last name: <br/>
-        <InputText @bind-Value="newChild.LastName"/>
-    </div>    
-    <div class="form-group">
-        Hair colour: <br/>
-        <InputSelect @bind-Value="newChild.HairColor">
-            @foreach (var value in Enum.GetValues(typeof(HairColours)))
-            {
-                <option>@value</option>
-            }
-        </InputSelect>
-    </div>   
-    <div class="form-group">
-        Eye colour: <br/>
-        <InputSelect @bind-Value="newChild.EyeColor">
-            @foreach (var value in Enum.GetValues(typeof(EyeColours)))
-            {
-                <option>@value</option>
-            }
-        </InputSelect>
-    </div>
-    <div class="form-group">
-        Age:<br />
-        <InputNumber @bind-Value="newChild.Age" />
-    </div>
-    <div class="form-group">
-        Weight:<br />
-        <InputNumber @bind-Value="newChild.Weight" />
-    </div>    
-    <div class="form-group">
-        Height:<br />
-        <InputNumber @bind-Value="newChild.Height" />
-    </div>    
-    <div class="form-group">
-        Sex: <br/>
-        <InputSelect @bind-Value="newChild.Sex">
-            <option>Male</option>
-            <option>Female</option>
-            <option>Other</option>
-        </InputSelect>
-    </div>
-    <EditForm Model="@interest" OnValidSubmit="@AddInterestsToList" Context="Interest">
-        <DataAnnotationsValidator />
-        <ValidationSummary />
-        <div class="form-group">
-            Interest: <br />
-            <InputSelect @bind-Value="interest.Type">
-                @foreach (var value in Enum.GetValues(typeof(InterestsEnum)))
+    <div class='familyItem'>
+        <h3>Add Child</h3>
+        <EditForm Model="@newChild" OnValidSubmit="@AddNewChild">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+            <div class="form-group">
+                First name: <br />
+                <InputText @bind-Value="newChild.FirstName" disabled="@IsDisabled" />
+            </div>
+            <div class="form-group">
+                Last name: <br />
+                <InputText @bind-Value="newChild.LastName" disabled="@IsDisabled" />
+            </div>
+            <div class="form-group">
+                Hair colour: <br />
+                <InputSelect @bind-Value="newChild.HairColor" disabled="@IsDisabled">
+                    <option value="" selected disabled hidden>Choose here</option>
+                    @foreach (var value in Enum.GetValues(typeof(HairColours)))
+                    {
+                        <option>@value</option>
+                    }
+                </InputSelect>
+            </div>
+            <div class="form-group">
+                Eye colour: <br />
+                <InputSelect @bind-Value="newChild.EyeColor" disabled="@IsDisabled">
+                    <option value="" selected disabled hidden>Choose here</option>
+                    @foreach (var value in Enum.GetValues(typeof(EyeColours)))
+                    {
+                        <option>@value</option>
+                    }
+                </InputSelect>
+            </div>
+            <div class="form-group">
+                Age:<br />
+                <InputNumber @bind-Value="newChild.Age" disabled="@IsDisabled" />
+            </div>
+            <div class="form-group">
+                Weight:<br />
+                <InputNumber @bind-Value="newChild.Weight" disabled="@IsDisabled" />
+            </div>
+            <div class="form-group">
+                Height:<br />
+                <InputNumber @bind-Value="newChild.Height" disabled="@IsDisabled" />
+            </div>
+            <div class="form-group">
+                Sex: <br />
+                <InputSelect @bind-Value="newChild.Sex" disabled="@IsDisabled">
+                    <option value="" selected disabled hidden>Choose here</option>
+                    <option>Male</option>
+                    <option>Female</option>
+                    <option>Other</option>
+                </InputSelect>
+            </div>
+
+            <EditForm Model="@interest" OnValidSubmit="@AddInterestsToList" Context="Interest">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+                <div class="form-group">
+                    Interest: <br />
+                    <InputSelect @bind-Value="interest.Type" disabled="@IsDisabled">
+                        <option value="" selected disabled hidden>Choose here</option>
+                        @foreach (var value in Enum.GetValues(typeof(InterestsEnum)))
+                        {
+                            <option>@value</option>
+                        }
+                    </InputSelect>
+                </div>
+                <p class="actions">
+                    <button class="btn btn-outline-dark" type="submit" disabled="@IsDisabled">Add Interest</button>
+                </p>
+                @foreach (var intrest in interests)
                 {
-                    <option>@value</option>
+                    <p> - @intrest.InterestId</p>
                 }
-            </InputSelect>
+            </EditForm>
+            <p class="actions">
+                <button class="btn btn-primary" type="submit" onclick="this.classList.add('active');" disabled="@IsDisabled">@buttonName</button>
+            </p>
+        </EditForm>
+
         </div>
-        <p class="actions">
-            <button class="btn btn-outline-dark" type="submit">Add Interest</button>
-        </p>
-    </EditForm>
-    <p class="actions">
-        <button class="btn btn-primary" type="submit" onclick="this.classList.add('active');">Create</button>
-    </p>
-</EditForm>
 
+        @code {
+            private List<ChildInterest> interests = new List<ChildInterest>();
+            private Interest interest = new Interest();
+            private Child newChild = new Child();
+            protected bool IsDisabled { get; set; } = false;
+            private string buttonName = "Add";
 
+            private void Startup()
+            {
+            }
 
-@code {
-    private List<ChildInterest> interests = new List<ChildInterest>();
-    private Interest interest = new Interest();
-    private Child newChild = new Child();
+            protected override async Task OnInitializedAsync()
+            {
+                Startup();
+            }
 
-    private void Startup()
-    {
-    }
-    
-    protected override async Task OnInitializedAsync()
-    {
-        Startup();
-    }
+            private void AddInterestsToList()
+            {
+                ChildInterest childInterest = new ChildInterest() { Interest = interest, InterestId = interest.Type };
+                interests.Add(childInterest);
+            }
 
-    private void AddInterestsToList()
-    {
-        ChildInterest insertInterest = new ChildInterest();
-        insertInterest.Interest = interest;
-        interests.Add(insertInterest);
-    }
-    private void AddNewChild()
-    {
-        newChild.ChildInterests = interests;
-        System.Console.WriteLine(newChild.ChildInterests.Count + newChild.FirstName + newChild.EyeColor);
-        CachingService.AddChild(newChild);
-        //NavigationManager.NavigateTo("/Families");
-    }
-}
+            private void AddNewChild()
+            {
+                buttonName = "Added";
+                IsDisabled = true;
+                newChild.ChildInterests = interests;
+                System.Console.WriteLine(newChild.ChildInterests.Count + newChild.FirstName + newChild.EyeColor);
+                CachingService.AddChild(newChild);
+                //NavigationManager.NavigateTo("/Families");
+            }
+        }

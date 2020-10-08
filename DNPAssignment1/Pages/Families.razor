@@ -3,6 +3,7 @@
 @using global::Models
 @attribute [Authorize(Policy = "SecurityLevel2")]
 @inject IFamilyService FamilyService
+@inject IJSRuntime JsRuntime
 @inject Microsoft.AspNetCore.Components.NavigationManager navigationManager
 
 
@@ -32,7 +33,7 @@ else
         <tbody>
             @foreach (var item in familiesToShow)
             {
-                <tr class="families" >
+                <tr class="families">
                     <td class="clk" @onclick="@(() => navigationManager.NavigateTo($"/FamilyEdit/{@item.StreetName}-{@item.HouseNumber}"))">@item.StreetName @item.HouseNumber</td>
                     <td>@GetAdults(item)</td>
                     <td>@NoFamilyMembers(item)</td>
@@ -50,7 +51,6 @@ else
 @code {
     private IList<Family> allFamilies;
     private IList<Family> familiesToShow;
-
 
     protected override async Task OnInitializedAsync()
     {
@@ -73,12 +73,13 @@ else
         i += family.Children.Count;
         return i;
     }
-    private string GetAdults(Family family) {
+    private string GetAdults(Family family)
+    {
         string str = "";
-        for(int i = 0; i < family.Adults.Count; i++)
+        for (int i = 0; i < family.Adults.Count; i++)
         {
-            str +=" " + family.Adults[i].FirstName + " " + family.Adults[i].LastName;
-            if(i < family.Adults.Count - 1)
+            str += " " + family.Adults[i].FirstName + " " + family.Adults[i].LastName;
+            if (i < family.Adults.Count - 1)
             {
                 str += ",";
             }

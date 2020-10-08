@@ -5,32 +5,34 @@
 @inject ICachingService CachingService;
 @inject NavigationManager NavigationManager;
 
-<h3>Add Pet</h3>
-<EditForm Model="@newPet" OnValidSubmit="@AddNewPet">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
-    <div class="form-group">
-        Name: <br />
-        <InputText @bind-Value="newPet.Name" />
-    </div>
-    <div class="form-group">
-        Age: <br />
-        <InputNumber @bind-Value="newPet.Age" />
-    </div>
-    <div class="form-group">
-        Species: <br />
-        <InputText @bind-Value="newPet.Species" />
-    </div>
-    <p class="actions">
-        <button class="btn btn-primary" type="submit" onclick="this.classList.add('active');">Add</button>
-    </p>
-</EditForm>
 
-@code {
-    private Pet newPet = new Pet();
+    <div class='familyItem'>
+        <h3>Add Pet</h3>
+        <EditForm Model="@newPet" OnValidSubmit="@AddNewPet">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+            <div class="form-group">
+                Name: <br />
+                <InputText @bind-Value="newPet.Name" />
+            </div>
+            <div class="form-group">
+                Age: <br />
+                <InputNumber @bind-Value="newPet.Age" />
+            </div>
+            <div class="form-group">
+                Species: <br />
+                <InputText @bind-Value="newPet.Species" />
+            </div>
+            <p class="actions">
+                <button class="btn btn-primary" type="submit" onclick="this.classList.add('active');">Add</button>
+            </p>
+        </EditForm>
+    </div>
+        @code {
+            private Pet newPet = new Pet();
 
-    private void AddNewPet()
-    {
-        CachingService.AddPet(newPet);
-    }
-}
+            private void AddNewPet()
+            {
+                CachingService.AddPet(newPet);
+            }
+        }
