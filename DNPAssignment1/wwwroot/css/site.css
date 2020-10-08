@@ -181,14 +181,47 @@ input[type="password"], input[type="text"] {
     background: white;
     border: .1rem solid #aaa !important;
 }
-.familyItem {
+.petItem, .adultItem, .childItem {
     margin: 2rem;
     padding: 1rem;
     margin-top: 0;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
     border-radius: .4rem;
     background-color: white;
+    height: 50rem;
+    overflow: hidden;
 }
+.petItem {
+    height: 21rem;
+    transition: height .4s ease;
+}
+.childItem {
+    height: 52rem;
+    transition: height .8s ease;
+    overflow: auto;
+}
+.adultItem {
+    border-right: 5px solid white;
+    height: 50rem;
+    transition: height .7s ease;
+}
+
+.childItem::-webkit-scrollbar-track {
+    border-radius: .4rem;
+    background-color: white;
+}
+
+.childItem::-webkit-scrollbar {
+    width: 8px;
+    background-color: white;
+    border-radius: .4rem;
+}
+
+.childItem::-webkit-scrollbar-thumb {
+    border-radius: .4rem;
+    background-color: #ddd;
+}
+
 input {
     border-radius: .3rem;
     border: .1rem solid #ddd;
@@ -210,10 +243,12 @@ select {
     padding: .2rem;
 }
 
-.closed{
+.closed {
     height: 3.5rem;
     overflow: hidden;
 }
+
+
 
 .familyCard {
     height: 8rem;
@@ -286,6 +321,23 @@ select {
 }
 .petDisplay {
     background-image: url("002-dog.png");
+}
+.minWindow {
+    float: right;
+    border: none;
+    border-radius: .1rem;
+    background-color: #ffffff;
+    height: 1.5rem;
+    width: 1.5rem;
+    border: .1rem solid #aaa;
+    outline: none;
+    font-size: 1rem;
+    font-weight: bolder;
+    padding: 0;
+
+}
+.minWindow:hover, .minWindow:focus, .minWindow:active{
+    background: #ddd;
 }
 @media (max-width: 767.98px) {
     .main .top-row:not(.auth) {
