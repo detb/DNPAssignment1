@@ -4,51 +4,66 @@
 @inject IFamilyService FamilyService
 @inject Microsoft.AspNetCore.Components.NavigationManager navigationManager
 
-<h2>Families in system: @allFamilies.Count</h2>
+    <AuthorizeView>
+        <NotAuthorized>
+            <LoginComponent.LoginComp/>
+        </NotAuthorized>
+        <Authorized>
+            <h2>Families in system: @allFamilies.Count</h2>
 
-<div class="familyContainer" id="familyContainer">
-    @foreach (var family in allFamilies)
-    {
-    <div class="familyCard" @onclick="@(() => navigationManager.NavigateTo($"/FamilyEdit/{@family.StreetName}-{@family.HouseNumber}"))">
-        <p class="addr">@family.StreetName @family.HouseNumber</p>
-        <p class="memb">Members: @NoFamilyMembers(family)</p>
-        <div class="memberCont">
-            @if (family.Adults.Count > 0)
-            {
-                <div class="adultDisplay">@if (family.Adults.Count > 1)
-                {<p> x @family.Adults.Count</p>}</div>
-            }
-            @if (family.Children.Count > 0)
-            {
-                <div class="childDisplay">@if (family.Children.Count > 1)
-                {<p> x @family.Children.Count</p>}</div>
-            }
-            @if (family.Pets.Count > 0)
-            {
-                <div class="petDisplay">@if (family.Pets.Count > 1)
-                {<p> x @family.Pets.Count</p>}</div>
-            }
-        </div>
-    </div>
+            <div class="familyContainer" id="familyContainer">
+                @foreach (var family in allFamilies)
+                {
+                    <div class="familyCard" @onclick="@(() => navigationManager.NavigateTo($"/FamilyEdit/{@family.StreetName}-{@family.HouseNumber}"))">
+                        <p class="addr">@family.StreetName @family.HouseNumber</p>
+                        <p class="memb">Members: @NoFamilyMembers(family)</p>
+                        <div class="memberCont">
+                            @if (family.Adults.Count > 0)
+                            {
+                                <div class="adultDisplay">
+                                    @if (family.Adults.Count > 1)
+                                    {<p> x @family.Adults.Count</p>}
+                                </div>
+                            }
+                            @if (family.Children.Count > 0)
+                            {
+                                <div class="childDisplay">
+                                    @if (family.Children.Count > 1)
+                                    {<p> x @family.Children.Count</p>}
+                                </div>
+                            }
+                            @if (family.Pets.Count > 0)
+                            {
+                                <div class="petDisplay">
+                                    @if (family.Pets.Count > 1)
+                                    {<p> x @family.Pets.Count</p>}
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        </Authorized>
+    </AuthorizeView>
+
+            
+
+    @code{
+        private IList<Family> allFamilies;
+        private IList<Family> familiesToShow;
+
+
+        protected override async Task OnInitializedAsync()
+        {
+            allFamilies = FamilyService.GetFamilies();
+            familiesToShow = FamilyService.GetFamilies();
+        }
+
+        private int NoFamilyMembers(Family family)
+        {
+            int i = 0;
+            i += family.Adults.Count;
+            i += family.Children.Count;
+            return i;
+        }
     }
-</div>
-
-@code{
-    private IList<Family> allFamilies;
-    private IList<Family> familiesToShow;
-
-
-    protected override async Task OnInitializedAsync()
-    {
-        allFamilies = FamilyService.GetFamilies();
-        familiesToShow = FamilyService.GetFamilies();
-    }
-
-    private int NoFamilyMembers(Family family)
-    {
-        int i = 0;
-        i += family.Adults.Count;
-        i += family.Children.Count;
-        return i;
-    }
-}

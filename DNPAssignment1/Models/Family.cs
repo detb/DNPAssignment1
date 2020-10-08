@@ -22,7 +22,35 @@ public class Family {
         Adults = new List<Adult>();     
     }
 
-}
+        public bool containsAdult(string str)
+        {
+            foreach (var f in Adults)
+            {
+                if ((f.FirstName.ToLower()).Contains(str) || (f.LastName.ToLower()).Contains(str))
+                    return true;
+            }
+            return false;
+        }
+        public bool containsPet(string str)
+        {
+            foreach (var f in Pets)
+            {
+                if ((f.Name.ToLower()).Contains(str))
+                    return true;
+            }
+            return false;
+        }
+        public bool containsChild(string str)
+        {
+            foreach (var f in Children)
+            {
+                if ((f.FirstName.ToLower()).Contains(str) || (f.LastName.ToLower()).Contains(str))
+                    return true;
+            }
+            return false;
+        }
+
+    }
 
 
 }

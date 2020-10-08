@@ -22,12 +22,17 @@ else if (!allFamilies.Any())
 }
 else
 {
+    <p>
+        Filter by Addres, adults, children or pets: <br /> 
+        <input type="text" @oninput="@((arg) => FilterByUserId(arg))" />
+    </p>
     <table class="table">
         <thead>
             <tr>
                 <th>Address</th>
                 <th>Adult(s)</th>
                 <th>No of Members</th>
+                <th>Delete</th>
             </tr>
         </thead>
         <tbody>
@@ -51,6 +56,7 @@ else
 @code {
     private IList<Family> allFamilies;
     private IList<Family> familiesToShow;
+    private string? filterByAddr;
 
     protected override async Task OnInitializedAsync()
     {
@@ -85,5 +91,30 @@ else
             }
         }
         return str;
+    }
+    private void FilterByUserId(ChangeEventArgs changeEventArgs)
+    {
+        try
+        {
+            FilterByUserId(changeEventArgs.Value.ToString());
+        }
+        catch (Exception e) { }
+    }
+    private void FilterByUserId(string sortId)
+    {
+        filterByAddr = null;
+        try
+        {
+            filterByAddr = sortId;
+        }
+        catch (Exception e) { }
+        ExecuteFilter();
+    }
+    private void ExecuteFilter()
+    {
+        familiesToShow = allFamilies.Where(t => ((t.StreetName.ToLower() + " " + t.HouseNumber).Contains(filterByAddr.ToLower())) 
+        || t.containsAdult(filterByAddr.ToLower())
+        || t.containsChild(filterByAddr.ToLower())
+        || t.containsPet(filterByAddr.ToLower())).ToList();
     }
 }

@@ -1,7 +1,6 @@
 ﻿@page "/FamilyEdit/{import}"
 @using DNPAssignment1.Data
 @using global::Models
-@attribute [Authorize(Policy = "SecurityLevel2")]
 @inject IFamilyService FamilyService
 @inject ICachingService CachingService
     <h4>

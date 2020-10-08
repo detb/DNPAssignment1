@@ -8,7 +8,7 @@
 
 <div class='petItem  @(IsOpen ? "" : "closed")'>
     <input type="button" class="minWindow" @onclick="toggle" value="_" />
-    @if (IsOpen || newPet.Name== null || newPet.FirstName == "")
+    @if (IsOpen || newPet.Name== null || newPet.Name == "")
     {
         <h4>Add Pet</h4>
     }
