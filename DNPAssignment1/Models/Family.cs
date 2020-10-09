@@ -49,6 +49,27 @@ public class Family {
             }
             return false;
         }
+        public bool containsJob(string str)
+        {
+            foreach (var f in Adults)
+            {
+                if ((f.JobTitle.ToLower()).Contains(str))
+                    return true;
+            }
+            return false;
+        }
+        public bool containsIntrest(string str)
+        {
+            foreach (var f in Children)
+            {
+                foreach(var i in f.ChildInterests)
+                {
+                    if ((i.InterestId.ToLower()).Contains(str))
+                        return true;
+                }
+            }
+            return false;
+        }
 
     }
 

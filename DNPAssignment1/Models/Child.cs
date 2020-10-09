@@ -11,6 +11,5 @@ public class Child : Person {
         ChildInterests = toUpdate.ChildInterests;
         Pets = toUpdate.Pets;
     }
-
-}
+    }
 }
