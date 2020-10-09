@@ -24,8 +24,6 @@ public class Person {
     public float Weight { get; set; }
     [NotNull, Range(1, Int32.MaxValue)]
     public int Height { get; set; }
-    [NotNull]
-    [ValidSex]
     public string Sex { get; set; }
 
     public void Update(Person toUpdate) {

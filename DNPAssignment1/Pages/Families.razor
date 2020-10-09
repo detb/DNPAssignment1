@@ -3,6 +3,7 @@
 @using global::Models
 @attribute [Authorize(Policy = "SecurityLevel2")]
 @inject IFamilyService FamilyService
+@inject IstatisticsService StatisticsService
 @inject IJSRuntime JsRuntime
 @inject Microsoft.AspNetCore.Components.NavigationManager navigationManager
 
@@ -79,6 +80,7 @@ else
         FamilyService.RemoveFamily(streetName, houseNumber);
         allFamilies.Remove(toRemove);
         familiesToShow.Remove(toRemove);
+        StatisticsService.setFamily(allFamilies);
     }
 
     private int NoFamilyMembers(Family family)

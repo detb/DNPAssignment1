@@ -5,6 +5,7 @@
 @inject IFamilyService FamilyService;
 @inject ICachingService CachingService;
 @inject NavigationManager NavigationManager;
+@inject IstatisticsService StatisticsService
 
 <EditForm Model="@newFamilyItem" OnValidSubmit="@AddNewFamily">
     <div class="familyContainer" id="container">
@@ -64,6 +65,7 @@
         CachingService.AddStreetName(newFamilyItem.StreetName);
         FamilyService.AddFamily(CachingService.GetFamily());
         NavigationManager.NavigateTo("/Families");
+        StatisticsService.setFamily(FamilyService.GetFamilies());
     }
 
     public void AddFamilyToStorage()
