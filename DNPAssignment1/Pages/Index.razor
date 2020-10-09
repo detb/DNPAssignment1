@@ -3,67 +3,138 @@
 @using global::Models
 @inject IFamilyService FamilyService
 @inject Microsoft.AspNetCore.Components.NavigationManager navigationManager
+@inject IJSRuntime jsRuntime
+@inject IstatisticsService StatisticsService
 
-    <AuthorizeView>
-        <NotAuthorized>
-            <LoginComponent.LoginComp/>
-        </NotAuthorized>
-        <Authorized>
-            <h2>Families in system: @allFamilies.Count</h2>
+<AuthorizeView>
+    <h2>Families breakdown</h2>
+    <div class="charts--container">
+        <section>
+            <h4>@allFamilies.Count families in system</h4>
+            <div class="pieID pie">
 
-            <div class="familyContainer" id="familyContainer">
-                @foreach (var family in allFamilies)
-                {
-                    <div class="familyCard" @onclick="@(() => navigationManager.NavigateTo($"/FamilyEdit/{@family.StreetName}-{@family.HouseNumber}"))">
-                        <p class="addr">@family.StreetName @family.HouseNumber</p>
-                        <p class="memb">Members: @NoFamilyMembers(family)</p>
-                        <div class="memberCont">
-                            @if (family.Adults.Count > 0)
-                            {
-                                <div class="adultDisplay">
-                                    @if (family.Adults.Count > 1)
-                                    {<p> x @family.Adults.Count</p>}
-                                </div>
-                            }
-                            @if (family.Children.Count > 0)
-                            {
-                                <div class="childDisplay">
-                                    @if (family.Children.Count > 1)
-                                    {<p> x @family.Children.Count</p>}
-                                </div>
-                            }
-                            @if (family.Pets.Count > 0)
-                            {
-                                <div class="petDisplay">
-                                    @if (family.Pets.Count > 1)
-                                    {<p> x @family.Pets.Count</p>}
-                                </div>
-                            }
-                        </div>
-                    </div>
-                }
             </div>
-        </Authorized>
-    </AuthorizeView>
+            <ul class="pieID legend">
+                <li>
+                    <em>Adults</em>
+                    <span>@allAdults()</span>
+                </li>
+                <li>
+                    <em>Children</em>
+                    <span>@allChildren()</span>
+                </li>
+                <li>
+                    <em>Pets</em>
+                    <span>@allPets()</span>
+                </li>
+            </ul>
+            <div class="avgCont">
+                Average adult
+                <p>Age: <span>@StatisticsService.avgAge()</span></p>
+                <p>Height: <span>@StatisticsService.avgHeight()</span></p>
+                <p>Weight: <span>@StatisticsService.avgWeight()</span></p>
+                <p>Gender: <span>@StatisticsService.avgGender()</span></p>
+                <p>Hair: <span>@StatisticsService.avgHair()</span></p>
+                <p>Eye-color: <span>@StatisticsService.avgEye()</span></p>
+                <p>Job: <span>@StatisticsService.avgJob()</span></p>
+            </div>
+        </section>
+    </div>
 
-            
-
-    @code{
-        private IList<Family> allFamilies;
-        private IList<Family> familiesToShow;
-
-
-        protected override async Task OnInitializedAsync()
+    <div class="familyContainer" id="familyContainer">
+        @foreach (var family in allFamilies)
         {
-            allFamilies = FamilyService.GetFamilies();
-            familiesToShow = FamilyService.GetFamilies();
+            <div class="familyCard" @onclick="@(() => navigationManager.NavigateTo($"/FamilyEdit/{@family.StreetName}-{@family.HouseNumber}"))">
+                <p class="addr">@family.StreetName @family.HouseNumber</p>
+                <p class="memb">Members: @NoFamilyMembers(family)</p>
+                <div class="memberCont">
+                    @if (family.Adults.Count > 0)
+                    {
+                        <div class="adultDisplay">
+                            @if (family.Adults.Count > 1)
+                            {<p> x @family.Adults.Count</p>}
+                        </div>
+                    }
+                    @if (family.Children.Count > 0)
+                    {
+                        <div class="childDisplay">
+                            @if (family.Children.Count > 1)
+                            {<p> x @family.Children.Count</p>}
+                        </div>
+                    }
+                    @if (family.Pets.Count > 0)
+                    {
+                        <div class="petDisplay">
+                            @if (family.Pets.Count > 1)
+                            {<p> x @family.Pets.Count</p>}
+                        </div>
+                    }
+                </div>
+            </div>
         }
+    </div>
+</AuthorizeView>
 
-        private int NoFamilyMembers(Family family)
-        {
-            int i = 0;
-            i += family.Adults.Count;
-            i += family.Children.Count;
-            return i;
-        }
+
+
+@code{
+    private IList<Family> allFamilies;
+    private IList<Family> familiesToShow;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        allFamilies = FamilyService.GetFamilies();
+        familiesToShow = FamilyService.GetFamilies();
+        StatisticsService.setFamily(allFamilies);
+        await renderChart();
     }
+
+    async Task renderChart()
+    {
+        System.Console.WriteLine("renderChart");
+        await jsRuntime.InvokeVoidAsync("renderPie");
+    }
+
+    private int NoFamilyMembers(Family family)
+    {
+        int i = 0;
+        i += family.Adults.Count;
+        i += family.Children.Count;
+        return i;
+    }
+
+    public int allAdults()
+    {
+        int i = 0;
+
+        foreach (var f in allFamilies)
+        {
+            i += f.Adults.Count;
+        }
+
+        return i;
+    }
+    public int allChildren()
+    {
+        int i = 0;
+
+        foreach (var f in allFamilies)
+        {
+            i += f.Children.Count;
+        }
+
+        return i;
+    }
+    public int allPets()
+    {
+        int i = 0;
+
+        foreach (var f in allFamilies)
+        {
+            i += f.Pets.Count;
+        }
+
+        return i;
+    }
+}

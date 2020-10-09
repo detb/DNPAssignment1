@@ -26,12 +26,12 @@ else
     <input type="text" @oninput="@((arg) => FilterByUserId(arg))" />
     <br />
     Filter:<br /> 
-    Address:<input type="checkbox" checked="@filterAddr" @onchange="@(e => OnUpdated(filterAddr, e))" /> | 
-    Adults:<input type="checkbox" checked="@filterAdult" @onchange="@(e => OnUpdated(filterAdult, e))"  /> | 
-    Children:<input type="checkbox" checked="@filterChild" @onchange="@(e => OnUpdated(filterChild, e))" /> | 
-    Pets:<input type="checkbox" checked="@filterPet" @onchange="@(e => OnUpdated(filterPet, e))" /> | 
-    Jobs:<input type="checkbox" checked="@filterJob" @onchange="@(e => OnUpdated(filterJob, e))" /> |
-    Interest:<input type="checkbox" checked="@filterIntrest" @onchange="@(e => OnUpdated(filterIntrest, e))" />
+    Address:<input type="checkbox" checked="@filterAddr" @onchange="@(e => OnUpdated(1, e))" />   |   
+    Adults:<input type="checkbox" checked="@filterAdult" @onchange="@(e => OnUpdated(2, e))"  />   |   
+    Children:<input type="checkbox" checked="@filterChild" @onchange="@(e => OnUpdated(3, e))" />   |   
+    Pets:<input type="checkbox" checked="@filterPet" @onchange="@(e => OnUpdated(4, e))" />   |   
+    Jobs:<input type="checkbox" checked="@filterJob" @onchange="@(e => OnUpdated(5, e))" />   |  
+    Interest:<input type="checkbox" checked="@filterIntrest" @onchange="@(e => OnUpdated(6, e))" />
 </p>
     <table class="table">
         <thead>
@@ -129,9 +129,17 @@ else
         || (t.containsIntrest(filterByAddr.ToLower()) && filterIntrest)).ToList();
     }
 
-    public void OnUpdated(bool flt, ChangeEventArgs e)
+    public void OnUpdated(int flt, ChangeEventArgs e)
     {
-        flt = !flt;
+        switch (flt)
+        {
+            case 1: filterAddr = !filterAddr; break;
+            case 2: filterAdult = !filterAdult; break;
+            case 3: filterChild = !filterChild; break;
+            case 4: filterPet = !filterPet; break;
+            case 5: filterJob = !filterJob; break;
+            case 6: filterIntrest = !filterIntrest; break;
+        }
         if(filterByAddr != null)
             ExecuteFilter();
     }
