@@ -189,6 +189,7 @@ tr:nth-child(even) {
     background-color: white;
     height: 50rem;
     overflow: hidden;
+    overflow-y: auto;
 }
 .petItem {
     height: 21rem;
