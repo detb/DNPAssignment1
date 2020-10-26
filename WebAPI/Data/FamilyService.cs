@@ -8,7 +8,7 @@ using Models;
 namespace DNPAssignment1.Data
 {
     public class FamilyService : IFamilyService
-     {
+    {
         private string familyFile = "families.json";
         private IList<Family> families;
 

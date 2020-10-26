@@ -35,7 +35,7 @@ namespace DNPAssignment1
             services.AddScoped<AuthenticationStateProvider, CustumAuthStateProvider>();
             services.AddScoped<IUserService, InMemoryUserService>();
             services.AddSingleton<IstatisticsService, StatisticsService>();
-            services.AddSingleton<IFamilyService, FamilyService>();
+            services.AddSingleton<IFamilyService, CloudFamilyService>();
             services.AddSingleton<ICachingService, CachingService>();
 
             services.AddAuthorization(options => {

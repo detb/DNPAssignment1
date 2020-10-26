@@ -1,8 +1,8 @@
 ﻿@page "/"
 @using DNPAssignment1.Data
 @using global::Models
-@inject IFamilyService FamilyService
-@inject Microsoft.AspNetCore.Components.NavigationManager navigationManager
+@inject IFamilyService CloudFamilyService
+@inject NavigationManager navigationManager
 @inject IJSRuntime jsRuntime
 @inject IstatisticsService StatisticsService
 
@@ -73,19 +73,20 @@
             </div>
         }
     </div>
+
 </AuthorizeView>
 
 
 
 @code{
-    private IList<Family> allFamilies;
+    private IList<Family> allFamilies ;
     private IList<Family> familiesToShow;
 
 
     protected override async Task OnInitializedAsync()
     {
-        allFamilies = FamilyService.GetFamilies();
-        familiesToShow = FamilyService.GetFamilies();
+        allFamilies = await CloudFamilyService.GetFamiliesAsync();
+        familiesToShow = allFamilies;
         StatisticsService.setFamily(allFamilies);
         await renderChart();
     }

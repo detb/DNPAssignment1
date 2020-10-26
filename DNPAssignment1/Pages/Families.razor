@@ -2,7 +2,7 @@
 @using DNPAssignment1.Data
 @using global::Models
 @attribute [Authorize(Policy = "SecurityLevel2")]
-@inject IFamilyService FamilyService
+@inject IFamilyService CloudFamilyService
 @inject IstatisticsService StatisticsService
 @inject IJSRuntime JsRuntime
 @inject Microsoft.AspNetCore.Components.NavigationManager navigationManager
@@ -70,14 +70,14 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        allFamilies = FamilyService.GetFamilies();
-        familiesToShow = FamilyService.GetFamilies();
+        allFamilies = await CloudFamilyService.GetFamiliesAsync();
+        familiesToShow = await CloudFamilyService.GetFamiliesAsync();
     }
 
     private void RemoveFamily(string streetName, int houseNumber)
     {
         Family toRemove = allFamilies.First(f => (f.StreetName == streetName && f.HouseNumber == houseNumber));
-        FamilyService.RemoveFamily(streetName, houseNumber);
+       // FamilyService.RemoveFamily(streetName, houseNumber);
         allFamilies.Remove(toRemove);
         familiesToShow.Remove(toRemove);
         StatisticsService.setFamily(allFamilies);

@@ -1,7 +1,7 @@
 ﻿@page "/FamilyEdit/{import}"
 @using DNPAssignment1.Data
 @using global::Models
-@inject IFamilyService FamilyService
+@inject IFamilyService CloudFamilyService
 @inject ICachingService CachingService
     <h4>
         Address:
@@ -99,7 +99,7 @@
     {
         //the param will be set now
         atts = import.Split(new[] { "-" }, StringSplitOptions.RemoveEmptyEntries);
-        family = FamilyService.GetFamily(atts[0], Int32.Parse(atts[1]));
+       // family = CloudFamilyService.GetFamilyAsync(atts[0], Int32.Parse(atts[1]));
 
         System.Console.WriteLine(family.StreetName);
     }

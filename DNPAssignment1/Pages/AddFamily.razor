@@ -63,9 +63,9 @@
     {
         CachingService.AddHouseNumber(newFamilyItem.HouseNumber);
         CachingService.AddStreetName(newFamilyItem.StreetName);
-        FamilyService.AddFamily(CachingService.GetFamily());
+       // FamilyService.AddFamily(CachingService.GetFamily());
         NavigationManager.NavigateTo("/Families");
-        StatisticsService.setFamily(FamilyService.GetFamilies());
+       // StatisticsService.setFamily(FamilyService.GetFamilies());
     }
 
     public void AddFamilyToStorage()
