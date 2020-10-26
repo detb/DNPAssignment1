@@ -11,11 +11,11 @@ namespace WebAPI.Controllers
     [Route("[controller]")]
     public class FamilyController : ControllerBase
     {
-        private IFamilyService FamilyService;
+        private IFamilyService familyService;
 
         public FamilyController(IFamilyService familyService)
         {
-            this.FamilyService = familyService;
+            this.familyService = familyService;
         }
 
         [HttpGet]
@@ -23,11 +23,37 @@ namespace WebAPI.Controllers
         {
             try
             {
-                IList<Family> families = await FamilyService.GetFamiliesAsync();
+                IList<Family> families = await familyService.GetFamiliesAsync();
                 return Ok(families);
             }
             catch (Exception e)
             {
+                Console.WriteLine(e);
+                return StatusCode(500, e.Message);
+            }
+        }
+        
+        [HttpPost]
+        public async Task<ActionResult<Family>> AddFamily([FromBody] Family family) {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            try {
+                Family added = await familyService.AddFamilyAsync(family);
+                return Created($"/{added.StreetName+added.HouseNumber}",added); // return newly added to-do, to get the auto generated id
+            } catch (Exception e) {
+                Console.WriteLine(e);
+                return StatusCode(500, e.Message);
+            }
+        }
+        
+        [HttpDelete]
+        public async Task<ActionResult> DeleteTodo([FromQuery] string streetName, [FromQuery] int houseNumber) {
+            try {
+                await familyService.RemoveFamilyAsync(streetName,houseNumber);
+                return Ok();
+            } catch (Exception e) {
                 Console.WriteLine(e);
                 return StatusCode(500, e.Message);
             }

@@ -5,7 +5,7 @@
 @inject IFamilyService CloudFamilyService
 @inject IstatisticsService StatisticsService
 @inject IJSRuntime JsRuntime
-@inject Microsoft.AspNetCore.Components.NavigationManager navigationManager
+@inject NavigationManager navigationManager
 
 
 <h3>Families</h3>
@@ -71,13 +71,13 @@ else
     protected override async Task OnInitializedAsync()
     {
         allFamilies = await CloudFamilyService.GetFamiliesAsync();
-        familiesToShow = await CloudFamilyService.GetFamiliesAsync();
+        familiesToShow = allFamilies;
     }
 
-    private void RemoveFamily(string streetName, int houseNumber)
+    private async void RemoveFamily(string streetName, int houseNumber)
     {
         Family toRemove = allFamilies.First(f => (f.StreetName == streetName && f.HouseNumber == houseNumber));
-       // FamilyService.RemoveFamily(streetName, houseNumber);
+        await CloudFamilyService.RemoveFamilyAsync(streetName, houseNumber);
         allFamilies.Remove(toRemove);
         familiesToShow.Remove(toRemove);
         StatisticsService.setFamily(allFamilies);

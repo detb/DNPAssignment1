@@ -45,10 +45,11 @@ namespace DNPAssignment1.Data
             return tmp;
         }
         
-        public async Task AddFamilyAsync(Family family)
+        public async Task<Family> AddFamilyAsync(Family family)
         {
             families.Add(family);
             WriteFamiliesFile();
+            return family;
         }
         
         public async Task RemoveFamilyAsync(string StreetName, int HouseNumber)

@@ -2,7 +2,7 @@
 @using global::Models
 @using DNPAssignment1.Data
 @attribute [Authorize(Policy = "SecurityLevel2")]
-@inject IFamilyService FamilyService;
+@inject IFamilyService CloudFamilyService;
 @inject ICachingService CachingService;
 @inject NavigationManager NavigationManager;
 @inject IstatisticsService StatisticsService
@@ -59,13 +59,13 @@
     public List<Object> children = new List<object>();
     public List<Object> pets = new List<object>();
 
-    private void AddNewFamily()
+    private async void AddNewFamily()
     {
         CachingService.AddHouseNumber(newFamilyItem.HouseNumber);
         CachingService.AddStreetName(newFamilyItem.StreetName);
-       // FamilyService.AddFamily(CachingService.GetFamily());
+        await CloudFamilyService.AddFamilyAsync(CachingService.GetFamily());
         NavigationManager.NavigateTo("/Families");
-       // StatisticsService.setFamily(FamilyService.GetFamilies());
+        StatisticsService.setFamily(await CloudFamilyService.GetFamiliesAsync());
     }
 
     public void AddFamilyToStorage()

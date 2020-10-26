@@ -1,8 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
+using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Models;
+using Newtonsoft.Json;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace DNPAssignment1.Data
 {
@@ -19,18 +23,23 @@ namespace DNPAssignment1.Data
         {
             Task<string> stringAsync = client.GetStringAsync(uri + "/family");
             string message = await stringAsync;
-            List<Family> result = JsonSerializer.Deserialize<List<Family>>(message);
+
+            List<Family> result = JsonConvert.DeserializeObject<List<Family>>(message);
             return result;
         }
 
         public async Task AddFamilyAsync(Family family)
         {
-            throw new System.NotImplementedException();
+            string todoAsJson = JsonSerializer.Serialize(family);
+            HttpContent content = new StringContent(todoAsJson,
+                Encoding.UTF8,
+                "application/json");
+            await client.PostAsync(uri+"/family", content);
         }
 
         public async Task RemoveFamilyAsync(string StreetName, int HouseNumber)
         {
-            throw new System.NotImplementedException();
+            await client.DeleteAsync($"{uri}/family?streetName={StreetName}&houseNumber={HouseNumber}");
         }
 
         public async Task AddPetAsync(string StreetName, int HouseNumber, Pet pet)
