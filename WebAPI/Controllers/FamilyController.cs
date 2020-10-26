@@ -49,7 +49,7 @@ namespace WebAPI.Controllers
         }
         
         [HttpDelete]
-        public async Task<ActionResult> DeleteTodo([FromQuery] string streetName, [FromQuery] int houseNumber) {
+        public async Task<ActionResult> DeleteFamily([FromQuery] string streetName, [FromQuery] int houseNumber) {
             try {
                 await familyService.RemoveFamilyAsync(streetName,houseNumber);
                 return Ok();
