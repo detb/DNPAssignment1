@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using DNPAssignment1.Models;
 using Models;
 
 namespace DNPAssignment1.Data
@@ -13,7 +14,8 @@ namespace DNPAssignment1.Data
 
         void updateFamilyList();
         Task<Family> GetFamilyAsync(string StreetName, int HouseNumber);
-
         Task AddAdultAsync(Adult adult, Family family);
+
+        Task<User> LogInUser(string userName, string pass);
     }
 }

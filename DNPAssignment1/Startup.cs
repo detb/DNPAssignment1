@@ -1,19 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using DNPAssignment1.Data;
 using Microsoft.AspNetCore.Components.Authorization;
-using DNPAssignment1.Authentification;
-using DNPAssignment1.Data.Impl;
 using System.Security.Claims;
+using DNPAssignment1.Authentification;
 
 namespace DNPAssignment1
 {
@@ -33,7 +26,6 @@ namespace DNPAssignment1
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddScoped<AuthenticationStateProvider, CustumAuthStateProvider>();
-            services.AddScoped<IUserService, InMemoryUserService>();
             services.AddSingleton<IstatisticsService, StatisticsService>();
             services.AddSingleton<IFamilyService, CloudFamilyService>();
             services.AddSingleton<ICachingService, CachingService>();

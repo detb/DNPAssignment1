@@ -1,9 +1,9 @@
 ﻿@page "/login"
-@using global::DNPAssignment1.Authentification
 @namespace LoginComponent
 
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject NavigationManager NavigationManager
+@inject DNPAssignment1.Data.CloudFamilyService cloudFamilyService
 
 <AuthorizeView>
     <NotAuthorized>
@@ -39,7 +39,7 @@
         errorMessage = "";
         try
         {
-            ((CustumAuthStateProvider)AuthenticationStateProvider).ValidateLogin(username, password);
+            ((DNPAssignment1.Authentification.CustumAuthStateProvider)AuthenticationStateProvider).ValidateLogin(username, password);
             username = "";
             password = "";
         }
@@ -56,7 +56,7 @@
         password = "";
         try
         {
-            ((CustumAuthStateProvider)AuthenticationStateProvider).Logout();
+            ((DNPAssignment1.Authentification.CustumAuthStateProvider)AuthenticationStateProvider).Logout();
             NavigationManager.NavigateTo("/login");
         }
         catch (Exception e) { }
