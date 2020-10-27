@@ -14,14 +14,14 @@ namespace DNPAssignment1.Authentification
     public class CustumAuthStateProvider : AuthenticationStateProvider
     {
         private readonly IJSRuntime jsRuntime;
-        private readonly IUserService userService;
+        private readonly IUserService CloudUserService;
 
         public User cachedUser;
 
         public CustumAuthStateProvider(IJSRuntime jsRuntime, IUserService userService)
         {
             this.jsRuntime = jsRuntime;
-            this.userService = userService;
+            this.CloudUserService = userService;
         }
 
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
@@ -50,7 +50,7 @@ namespace DNPAssignment1.Authentification
         {
             return cachedUser;
         }
-        public void ValidateLogin(string username, string password)
+        public async void ValidateLogin(string username, string password)
         {
             Console.WriteLine("Validating log in");
             if (string.IsNullOrEmpty(username)) throw new Exception("Enter username");
@@ -59,7 +59,7 @@ namespace DNPAssignment1.Authentification
             ClaimsIdentity identity = new ClaimsIdentity();
             try
             {
-                User user = userService.ValidateUser(username, password);
+                User user = await CloudUserService.ValidateUser(username, password);
                 identity = SetupClaimsForUser(user);
                 string serialisedData = JsonSerializer.Serialize(user);
                 jsRuntime.InvokeVoidAsync("sessionStorage.setItem", "currentUser", serialisedData);

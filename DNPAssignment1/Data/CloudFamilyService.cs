@@ -66,14 +66,5 @@ namespace DNPAssignment1.Data
         {
             throw new System.NotImplementedException();
         }
-
-        public async Task<User> LogInUser(string userName, string pass)
-        {
-            Task<string> stringAsync = client.GetStringAsync($"{uri}/api/userlogin?userName={userName}&pass={pass}");
-            string message = await stringAsync;
-
-            User result = JsonConvert.DeserializeObject<User>(message);
-            return result;
-        }
     }
 }

@@ -8,6 +8,6 @@ namespace DNPAssignment1.Data
 {
     public interface IUserService
     {
-        User ValidateUser(string userName, string Password);
+        Task<User> ValidateUser(string userName, string pass);
     }
 }

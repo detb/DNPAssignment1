@@ -25,10 +25,11 @@ namespace DNPAssignment1
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
+            services.AddSingleton<IFamilyService, CloudFamilyService>();
             services.AddScoped<AuthenticationStateProvider, CustumAuthStateProvider>();
             services.AddSingleton<IstatisticsService, StatisticsService>();
-            services.AddSingleton<IFamilyService, CloudFamilyService>();
             services.AddSingleton<ICachingService, CachingService>();
+            services.AddSingleton<IUserService, CloudUserService>();
 
             services.AddAuthorization(options => {
                 options.AddPolicy("MustBeVIA", a =>

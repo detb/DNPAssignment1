@@ -16,6 +16,5 @@ namespace DNPAssignment1.Data
         Task<Family> GetFamilyAsync(string StreetName, int HouseNumber);
         Task AddAdultAsync(Adult adult, Family family);
 
-        Task<User> LogInUser(string userName, string pass);
     }
 }
