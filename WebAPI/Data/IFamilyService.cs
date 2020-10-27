@@ -7,7 +7,7 @@ namespace DNPAssignment1.Data
     public interface IFamilyService
     {
         Task<IList<Family>> GetFamiliesAsync();
-        Task AddFamilyAsync(Family family);
+        Task<Family> AddFamilyAsync(Family family);
         Task RemoveFamilyAsync(string StreetName, int HouseNumber);
         Task AddPetAsync(string StreetName, int HouseNumber, Pet pet);
 

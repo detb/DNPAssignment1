@@ -1,17 +1,23 @@
 ﻿@page "/"
 @using DNPAssignment1.Data
 @using global::Models
-@inject IFamilyService FamilyService
-@inject Microsoft.AspNetCore.Components.NavigationManager navigationManager
+@inject IFamilyService CloudFamilyService
+@inject NavigationManager navigationManager
 @inject IJSRuntime jsRuntime
 @inject IstatisticsService StatisticsService
 
 <AuthorizeView>
-    <h2>Families breakdown</h2>
-    <div class="charts--container">
-        <section>
-            <h4>@allFamilies.Count families in system</h4>
-            <div class="pieID pie">
+    @if (allFamilies == null)
+    {
+        <h1>loading..</h1>
+    }
+    else
+    {
+        <h2>Families breakdown</h2>
+        <div class="charts--container">
+            <section>
+                <h4>@allFamilies.Count families in system</h4>
+                <div class="pieID pie">
 
             </div>
             <ul class="pieID legend">
@@ -83,19 +89,20 @@
             </div>
         }
     </div>
+    }
 </AuthorizeView>
 
 
 
 @code{
-    private IList<Family> allFamilies;
+    private IList<Family> allFamilies ;
     private IList<Family> familiesToShow;
 
 
     protected override async Task OnInitializedAsync()
     {
-        allFamilies = FamilyService.GetFamilies();
-        familiesToShow = FamilyService.GetFamilies();
+        allFamilies = await CloudFamilyService.GetFamiliesAsync();
+        familiesToShow = allFamilies;
         StatisticsService.setFamily(allFamilies);
         await renderChart();
     }
