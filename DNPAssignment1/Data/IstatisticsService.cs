@@ -8,15 +8,15 @@ namespace DNPAssignment1.Data
 {
     public interface IstatisticsService
     {
-        int avgAge();
-        int avgHeight();
-        float avgWeight();
-        string avgGender();
+        int avgAge(string str);
+        int avgHeight(string str);
+        float avgWeight(string str);
+        string avgGender(string str);
 
-        string avgHair();
+        string avgHair(string str);
 
-        string avgEye();
-        string avgJob();
+        string avgEye(string str);
+        string avgJob(string str);
 
         void setFamily(IList<Family> Families);
     }

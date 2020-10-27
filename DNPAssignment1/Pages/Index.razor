@@ -29,14 +29,24 @@
                 </li>
             </ul>
             <div class="avgCont">
-                Average adult
-                <p>Age: <span>@StatisticsService.avgAge()</span></p>
-                <p>Height: <span>@StatisticsService.avgHeight()</span></p>
-                <p>Weight: <span>@StatisticsService.avgWeight()</span></p>
-                <p>Gender: <span>@StatisticsService.avgGender()</span></p>
-                <p>Hair: <span>@StatisticsService.avgHair()</span></p>
-                <p>Eye-color: <span>@StatisticsService.avgEye()</span></p>
-                <p>Job: <span>@StatisticsService.avgJob()</span></p>
+                Average male
+                <p>Age: <span>@StatisticsService.avgAge("m")</span></p>
+                <p>Height: <span>@StatisticsService.avgHeight("m")</span></p>
+                <p>Weight: <span>@StatisticsService.avgWeight("m")</span></p>
+                <p>Gender: <span>@StatisticsService.avgGender("m")</span></p>
+                <p>Hair: <span>@StatisticsService.avgHair("m")</span></p>
+                <p>Eye-color: <span>@StatisticsService.avgEye("m")</span></p>
+                <p>Job: <span>@StatisticsService.avgJob("m")</span></p>
+            </div>
+            <div class="avgCont">
+                Average female
+                <p>Age: <span>@StatisticsService.avgAge("f")</span></p>
+                <p>Height: <span>@StatisticsService.avgHeight("f")</span></p>
+                <p>Weight: <span>@StatisticsService.avgWeight("f")</span></p>
+                <p>Gender: <span>@StatisticsService.avgGender("f")</span></p>
+                <p>Hair: <span>@StatisticsService.avgHair("f")</span></p>
+                <p>Eye-color: <span>@StatisticsService.avgEye("f")</span></p>
+                <p>Job: <span>@StatisticsService.avgJob("f")</span></p>
             </div>
         </section>
     </div>
