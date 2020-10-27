@@ -121,6 +121,7 @@ else
         catch (Exception e) { }
         ExecuteFilter();
     }
+
     private void ExecuteFilter()
     {
         familiesToShow = allFamilies.Where(t => (((t.StreetName.ToLower() + " " + t.HouseNumber).Contains(filterByAddr.ToLower())) && filterAddr)

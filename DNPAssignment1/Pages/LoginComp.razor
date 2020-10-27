@@ -1,9 +1,10 @@
 ﻿@page "/login"
+@using DNPAssignment1.Data
 @namespace LoginComponent
 
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject NavigationManager NavigationManager
-@inject DNPAssignment1.Data.CloudFamilyService cloudFamilyService
+@inject IFamilyService cloudFamilyService
 
 <AuthorizeView>
     <NotAuthorized>
