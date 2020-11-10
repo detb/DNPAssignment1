@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using DNPAssignment1.Models;
 
 namespace DNPAssignment1.Data
 {

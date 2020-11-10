@@ -1,11 +1,13 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
+using DNPAssignment1.Models;
 
 namespace Models {
 public class Family {
 
-        //public int Id { get; set; }
+        [Key]    
+        public int Id { get; set; }
 
         [NotNull]
         [Required(AllowEmptyStrings = false)]
@@ -62,7 +64,7 @@ public class Family {
         {
             foreach (var f in Children)
             {
-                foreach(var i in f.ChildInterests)
+                foreach(var i in f.ChildInterestTables)
                 {
                     if ((i.InterestId.ToLower()).Contains(str))
                         return true;
