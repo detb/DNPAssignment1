@@ -12,12 +12,12 @@ namespace DNPAssignment1.Data
     public class CloudUserService : IUserService
     {
 
-        private string uri = "https://localhost:44352";
+        private string uri = "https://10.152.210.25:5003";
         private readonly HttpClient client;
 
         public CloudUserService()
         {
-            client = new HttpClient();
+            client = getNewHttpClient();
         }
 
 
@@ -28,6 +28,18 @@ namespace DNPAssignment1.Data
 
             User result = JsonConvert.DeserializeObject<User>(message);
             return result;
+        }
+        
+        private HttpClient getNewHttpClient()
+        {
+            //HttpClient client = new HttpClient();
+            //Workaround: https://stackoverflow.com/questions/52939211/the-ssl-connection-could-not-be-established
+
+            HttpClientHandler clientHandler = new HttpClientHandler();
+            clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+
+            // Pass the handler to httpclient(from you are calling api)
+            return new HttpClient(clientHandler);
         }
     }
 }
