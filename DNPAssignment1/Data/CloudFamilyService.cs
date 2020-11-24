@@ -13,7 +13,7 @@ namespace DNPAssignment1.Data
 {
     public class CloudFamilyService : IFamilyService
     {
-        private string uri = "https://10.152.210.25:5003";
+        private string uri = "https://192.168.1.69:5003";
         private readonly HttpClient client;
 
         public CloudFamilyService() {
@@ -39,7 +39,7 @@ namespace DNPAssignment1.Data
 
         public async Task RemoveFamilyAsync(string StreetName, int HouseNumber)
         {
-            await client.DeleteAsync($"{uri}/family?streetName={StreetName}&houseNumber={HouseNumber}");
+            await client.DeleteAsync($"{uri}/api/family?streetName={StreetName}&houseNumber={HouseNumber}");
         }
 
         public async Task AddPetAsync(string StreetName, int HouseNumber, Pet pet)

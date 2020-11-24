@@ -12,7 +12,7 @@ namespace DNPAssignment1.Data
     public class CloudUserService : IUserService
     {
 
-        private string uri = "https://10.152.210.25:5003";
+        private string uri = "https://192.168.1.69:5003";
         private readonly HttpClient client;
 
         public CloudUserService()
