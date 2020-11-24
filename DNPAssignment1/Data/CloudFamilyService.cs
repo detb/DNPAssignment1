@@ -13,18 +13,17 @@ namespace DNPAssignment1.Data
 {
     public class CloudFamilyService : IFamilyService
     {
-        private string uri = "https://192.168.87.168:5003";
+        private string uri = "https://10.152.210.25:5003";
         private readonly HttpClient client;
 
         public CloudFamilyService() {
-            client = new HttpClient();
+            client = getNewHttpClient();
         }
         
         public async Task<IList<Family>> GetFamiliesAsync()
         {
-            Task<string> stringAsync = client.GetStringAsync(uri + "/api/allfamilies");
-            string message = await stringAsync;
-
+            string message = await client.GetStringAsync(uri + "/api/allfamilies");
+            
             List<Family> result = JsonConvert.DeserializeObject<List<Family>>(message);
             return result;
         }
@@ -35,7 +34,7 @@ namespace DNPAssignment1.Data
             HttpContent content = new StringContent(todoAsJson,
                 Encoding.UTF8,
                 "application/json");
-            await client.PostAsync(uri+"/family", content);
+            await client.PostAsync(uri+"/api/family", content);
         }
 
         public async Task RemoveFamilyAsync(string StreetName, int HouseNumber)
@@ -55,7 +54,7 @@ namespace DNPAssignment1.Data
 
         public async Task<Family> GetFamilyAsync(string StreetName, int HouseNumber)
         {
-            Task<string> stringAsync = client.GetStringAsync($"{uri}/family?streetName={StreetName}&houseNumber={HouseNumber}");
+            Task<string> stringAsync = client.GetStringAsync($"{uri}/api/family?streetName={StreetName}&houseNumber={HouseNumber}");
             string message = await stringAsync;
 
             Family result = JsonConvert.DeserializeObject<Family>(message);
@@ -65,6 +64,18 @@ namespace DNPAssignment1.Data
         public async Task AddAdultAsync(Adult adult, Family family)
         {
             throw new System.NotImplementedException();
+        }
+        
+        private HttpClient getNewHttpClient()
+        {
+            //HttpClient client = new HttpClient();
+            //Workaround: https://stackoverflow.com/questions/52939211/the-ssl-connection-could-not-be-established
+
+            HttpClientHandler clientHandler = new HttpClientHandler();
+            clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+
+            // Pass the handler to httpclient(from you are calling api)
+            return new HttpClient(clientHandler);
         }
     }
 }
