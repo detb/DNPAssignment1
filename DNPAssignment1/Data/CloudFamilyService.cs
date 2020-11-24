@@ -13,7 +13,7 @@ namespace DNPAssignment1.Data
 {
     public class CloudFamilyService : IFamilyService
     {
-        private string uri = "https://192.168.1.69:5003";
+        private string uri = "https://192.168.87.168:5003";
         private readonly HttpClient client;
 
         public CloudFamilyService() {
